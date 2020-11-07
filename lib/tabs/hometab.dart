@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:codefury2020/configurations/app_localizations.dart';
+import 'package:codefury2020/models/job.dart';
 import 'package:codefury2020/models/language.dart';
 import 'package:codefury2020/screens/jobView.dart';
 import 'package:flutter/material.dart';
@@ -73,15 +74,17 @@ class _HomeTabState extends State<HomeTab> {
                         height: MediaQuery.of(context).size.height * 0.5,
                         child: ListView.builder(
                           itemBuilder: (BuildContext context, int index) {
+                            Job jobData=Job.fromJson(snapshot.data.docs[index]
+                                    .data());
+                            // TODO : Use this data in the card
                             return RaisedButton(
-                                child: Text(snapshot.data.docs[index]
-                                    .data()
+                                child: Text(jobData
                                     .toString()),
                                 onPressed: () {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => JobViewPage()),
+                                        builder: (context) => JobViewPage(job: jobData),)
                                   );
                                 });
                           },
@@ -89,6 +92,7 @@ class _HomeTabState extends State<HomeTab> {
                         ),
                       );
                     }
+                    return CircularProgressIndicator();
                   },
                 ),
               ],
