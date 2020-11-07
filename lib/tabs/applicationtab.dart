@@ -34,7 +34,7 @@ class _ApplicationTabState extends State<ApplicationTab> {
                 children: [
                   Text(
                     // TODO AppLocalizations.of(context).translate('application history'),
-                    "History",
+                    AppLocalizations.of(context).translate('History'),
                     style: headingStyle,
                   ),
                   wspacing,
@@ -50,7 +50,7 @@ class _ApplicationTabState extends State<ApplicationTab> {
                           ),
                           SizedBox(width: size.width * 0.04),
                           Text(
-                            "Mangalore",
+                            AppLocalizations.of(context).translate('Mangalore'),
                             style: TextStyle(fontSize: smallfont * 1.25),
                           )
                         ],
@@ -58,7 +58,7 @@ class _ApplicationTabState extends State<ApplicationTab> {
                       GestureDetector(
                         onTap: () {},
                         child: Text(
-                          "Change",
+                          AppLocalizations.of(context).translate('Change'),
                           style: TextStyle(
                               fontSize: smallfont, color: Colors.indigo),
                         ),
