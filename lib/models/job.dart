@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Job{
-  String title,description,uid;
-  int duration;
+  String title,description,uid,duration,companyName,employerName;
+  int dailyHours;
   double salary;
   GeoPoint location;
   List<dynamic> reqdSkills;
@@ -17,10 +17,10 @@ class Job{
       title: json['title'],
       uid: json['uid'],
       description: json['description'],
-      duration: int.parse(json['duration'].toString()) ,
+      duration: json['job-span'].toString() ,
       salary: double.parse(json['salary'].toString()),
       location: GeoPoint(json['location'].latitude, json['location'].longitude),
-      reqdSkills: json['skills-required'] as List<dynamic>,
+      reqdSkills: json['skills-appreciated'] as List<dynamic>,
     );
   }
 }
