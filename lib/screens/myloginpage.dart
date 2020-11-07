@@ -40,7 +40,7 @@ class _MyLoginPageState extends State<MyLoginPage> {
 
   Future<void> verifyPhone(phoneNo) async {
     final PhoneVerificationCompleted verified = (AuthCredential authResult) {
-      AuthService().signIn(authResult);
+      AuthService().signIn(authResult, phoneNo);
     };
 
     final PhoneVerificationFailed verificationfailed =
@@ -228,7 +228,7 @@ class _MyLoginPageState extends State<MyLoginPage> {
                                             BorderRadius.circular(12.0),
                                       ),
                                       onPressed: () {
-                                        if (this.phoneNo != null &&
+                                        if (!loading&&this.phoneNo != null &&
                                             this.phoneNo.contains(new RegExp(
                                                 r'^(\+91[\-\s]?)?[0]?(91)?[789]\d{9}$'))) {
                                           setState(() {
@@ -237,21 +237,22 @@ class _MyLoginPageState extends State<MyLoginPage> {
                                           AuthService()
                                               .savePhoneNumber(this.phoneNo);
                                           if (codeSent) {
-                                            if (smsCode != null)
-                                              AuthService().signInWithOTP(
-                                                  smsCode, verificationId);
+                                            if (smsCode !=
+                                                null) AuthService()
+                                                    .signInWithOTP(
+                                                        smsCode,
+                                                        verificationId,
+                                                        this.phoneNo);
+                                                
+                                             
                                             else
                                               showtoast("Enter the OTP");
                                           } else
-                                            // verifyPhone(phoneNo);
-                                          Navigator.pushReplacement(
-                                                context,
-                                                new MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        Registration()));
-                                        } else
-                                          showtoast(
-                                              "Enter a valid phone number");
+                                            verifyPhone(phoneNo);
+                                             
+                                        }
+                                        else 
+                                        return null;
                                       })),
                             )
                           ],

@@ -1,5 +1,6 @@
 import 'package:codefury2020/configurations/app_localizations.dart';
 import 'package:codefury2020/historycard.dart';
+import 'package:codefury2020/screens/registration.dart';
 import 'package:codefury2020/services/authservice.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -90,7 +91,12 @@ class _ApplicationTabState extends State<ApplicationTab> {
                         ),
                         FlatButton(
                           onPressed: () {
-                            AuthService().signOut();
+                            // AuthService().signOut();
+                            Navigator.push(
+                                                  context,
+                                                  new MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          Registration()));
                           },
                           child: Text(
                             "Change",

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:codefury2020/main.dart';
 import 'package:codefury2020/screens/myloginpage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -38,13 +39,13 @@ class AuthService {
   }
 
   //SignIn
-  signIn(AuthCredential authCreds) {
-    FirebaseAuth.instance.signInWithCredential(authCreds);
+ signIn(AuthCredential authCreds,phNo) async {
+    await FirebaseAuth.instance.signInWithCredential(authCreds);
   }
 
-  signInWithOTP(smsCode, verId) {
+signInWithOTP(smsCode, verId,phNo)  {
     AuthCredential authCreds =
         PhoneAuthProvider.credential(verificationId: verId, smsCode: smsCode);
-    signIn(authCreds);
+   signIn(authCreds,phNo);
   }
 }
