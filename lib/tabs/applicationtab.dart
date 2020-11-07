@@ -58,14 +58,24 @@ class _ApplicationTabState extends State<ApplicationTab> {
             ),
             wspacing,
             Container(
-              decoration:
-                  BoxDecoration(borderRadius: BorderRadius.circular(30)),
-              width: size.width,
-              height: size.height * 0.15,
-              child: Card(
-                child: Text("hi"),
-              ),
-            )
+                decoration:
+                    BoxDecoration(borderRadius: BorderRadius.circular(30)),
+                width: size.width,
+                height: size.height * 0.15,
+                child: Card(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      const ListTile(
+                        leading: Icon(Icons.grass_sharp),
+                        title: Text('Famring'),
+                        subtitle: Text('Shetty'),
+                      ),
+                      const Text('Salary : 5000', textAlign: TextAlign.left),
+                      const Text('Location : Udupi', textAlign: TextAlign.left),
+                    ],
+                  ),
+                ))
           ]),
     ));
   }

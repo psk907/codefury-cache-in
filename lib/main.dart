@@ -125,26 +125,6 @@ class _MyHomePageState extends State<MyHomePage> {
         // Once complete, show your application
         if (snapshot.connectionState == ConnectionState.done) {
           return Scaffold(
-            appBar: AppBar(
-              title: Text(
-                AppLocalizations.of(context).translate('welcome'),
-              ),
-              actions: [
-                DropdownButton(
-                  underline: SizedBox(),
-                  icon: Icon(Icons.language),
-                  items: Language.languageList()
-                      .map<DropdownMenuItem>((lang) => DropdownMenuItem(
-                            child: Text(lang.name),
-                            value: lang,
-                          ))
-                      .toList(),
-                  onChanged: (language) {
-                    _changeLanguage(language);
-                  },
-                )
-              ],
-            ),
             bottomNavigationBar: BottomNavigationBar(
               items: const <BottomNavigationBarItem>[
                 BottomNavigationBarItem(
