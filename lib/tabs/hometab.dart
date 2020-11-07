@@ -129,6 +129,7 @@ class _HomeTabState extends State<HomeTab> {
                     return Container(
                       height: size.height * (1 - 12 / 35),
                       child: ListView.builder(
+                        physics: BouncingScrollPhysics(),
                         itemBuilder: (BuildContext context, int index) {
                           Job jobData =
                               Job.fromJson(snapshot.data.docs[index].data());
