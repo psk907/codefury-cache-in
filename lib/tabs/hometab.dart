@@ -39,7 +39,7 @@ class _HomeTabState extends State<HomeTab> {
     return SafeArea(
         child: Stack(children: [
       Container(
-        height: size.height * 0.35,
+        height: size.height * 0.4,
         decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
@@ -52,7 +52,9 @@ class _HomeTabState extends State<HomeTab> {
               Color(0xffffd78f),
               Color(0xffffdc9d),
               Color(0xffffe6b9),
-              Colors.white
+              Colors.white,
+              Colors.grey[50],
+              Colors.grey[100]
             ],
           ),
         ),
