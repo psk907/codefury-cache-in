@@ -66,7 +66,7 @@ class _PlacesSearchMapState extends State<PlacesSearchMap> {
   @override
   Widget build(BuildContext context) {
     return showLoading
-        ? CircularProgressIndicator()
+        ? Center(child: CircularProgressIndicator())
         : Scaffold(
             // 1
             body: GoogleMap(
