@@ -48,14 +48,17 @@ class _PlacesSearchMapState extends State<PlacesSearchMap> {
   Future<void> _getMarkers() async {
     QuerySnapshot qs =
         await FirebaseFirestore.instance.collection('employers').get();
-    List<Job> jobs = qs.docs.map((employer) => Job.fromJson(employer.data())).toList();
+    List<Job> jobs =
+        qs.docs.map((employer) => Job.fromJson(employer.data())).toList();
 
     jobs.forEach((job) {
       allMarkers.add(Marker(
         markerId: MarkerId(job.uid),
         position: LatLng(job.location.latitude, job.location.longitude),
-        infoWindow:
-            InfoWindow(title: job.title, snippet: job.salary.toString(),onTap: () => print("hey")),
+        infoWindow: InfoWindow(
+            title: job.title,
+            snippet: job.salary.toString(),
+            onTap: () => print("hey")),
       ));
     });
   }

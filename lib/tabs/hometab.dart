@@ -1,7 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:codefury2020/configurations/app_localizations.dart';
 import 'package:codefury2020/models/language.dart';
+import 'package:codefury2020/screens/jobView.dart';
 import 'package:flutter/material.dart';
-import '../jobmodel.dart';
 import '../main.dart';
 
 class HomeTab extends StatefulWidget {
@@ -62,13 +63,34 @@ class _HomeTabState extends State<HomeTab> {
                     ),
                   ],
                 ),
-                Container(child: Text("main")),
-                RaisedButton(onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => JobModel()),
-                  );
-                })
+                Container(child: Text("Search bar")),
+                StreamBuilder<QuerySnapshot>(
+                  stream:
+                      FirebaseFirestore.instance.collection('employers').snapshots(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      return Container(
+                        height: MediaQuery.of(context).size.height * 0.5,
+                        child: ListView.builder(
+                          itemBuilder: (BuildContext context, int index) {
+                            return RaisedButton(
+                                child: Text(snapshot.data.docs[index]
+                                    .data()
+                                    .toString()),
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => JobViewPage()),
+                                  );
+                                });
+                          },
+                          itemCount: snapshot.data.size,
+                        ),
+                      );
+                    }
+                  },
+                ),
               ],
             )));
   }
