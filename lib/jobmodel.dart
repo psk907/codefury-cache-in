@@ -46,25 +46,25 @@ class _JobModelState extends State<JobModel> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Company Name",
+                        AppLocalizations.of(context).translate('Company Name'),
                           style: TextStyle(
                               fontSize: mediumfont,
                               fontWeight: FontWeight.w400),
                         ),
                         Text(
-                          "Employer name",
+                          AppLocalizations.of(context).translate('Employer name'),
                           style: TextStyle(
                               color: Colors.grey[700],
                               fontSize: smallfont,
                               fontWeight: FontWeight.w400),
                         ),
                         FlatButton.icon(
-                            label: Text('Place'),
+                            label: Text(AppLocalizations.of(context).translate('Place')),
                             icon: Icon(Icons.location_on),
                             onPressed: () {}),
                         hspacing,
                         Text(
-                          " Need " + "plumber",
+                          AppLocalizations.of(context).translate('Need') + AppLocalizations.of(context).translate('plumber'),
                           style: TextStyle(fontSize: mediumfont * 0.8),
                         )
                       ],

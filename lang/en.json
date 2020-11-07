@@ -2,5 +2,10 @@
     "welcome": "Welcome !",
     "Home":"Home",
     "Map":"Map",
-    "Applications":"Applications"
+    "Applications":"Applications",
+    "Company name": "Company name",
+    "Employer name": "Employer name",
+    "Place": "Place",
+    "Need": "Need",
+    "plumber": "Plumber",
   }
