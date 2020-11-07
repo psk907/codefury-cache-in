@@ -34,5 +34,11 @@
     "Place": "Place",
     "Search": "Search",
     "Employers": "Employers",
-
+    "Hey there,": "Hey\nthere,",
+    "Enter your credentials": "Enter your credentials",
+    "Enter your phone number": "Enter your phone number",
+    "Enter the OTP": "Enter the OTP",
+    "Login": "Login",
+    "Verify": "Verify",
+    "Enter the valid phone number": "Enter the valid phone number"
 }
