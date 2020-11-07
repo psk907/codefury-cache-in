@@ -5,6 +5,7 @@ import 'package:codefury2020/models/job.dart';
 import 'package:codefury2020/models/language.dart';
 import 'package:codefury2020/screens/jobView.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../main.dart';
 
 class HomeTab extends StatefulWidget {
@@ -28,6 +29,8 @@ class _HomeTabState extends State<HomeTab> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle.dark.copyWith(statusBarColor: Color(0xffffc45b)));
     var size = MediaQuery.of(context).size;
     double mediumfont = size.height * 0.035;
     // double smallfont = size.height * 0.02;

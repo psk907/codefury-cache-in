@@ -1,6 +1,7 @@
 import 'package:codefury2020/historycard.dart';
 import 'package:codefury2020/services/authservice.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class ApplicationTab extends StatefulWidget {
   @override
@@ -10,6 +11,8 @@ class ApplicationTab extends StatefulWidget {
 class _ApplicationTabState extends State<ApplicationTab> {
   @override
   Widget build(BuildContext context) {
+    SystemUiOverlayStyle.dark.copyWith(statusBarColor: Color(0xffffc45b));
+
     var size = MediaQuery.of(context).size;
     double mediumfont = size.height * 0.035;
     double smallfont = size.height * 0.02;
