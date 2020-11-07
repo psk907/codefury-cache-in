@@ -115,7 +115,7 @@ class _MyLoginPageState extends State<MyLoginPage> {
                     child: MediaQuery.of(context).viewInsets.bottom > 20
                         ? Container()
                         : Image.asset(
-                            'assets/shopocus.png',
+                            'assets/logo.png',
                             height: size.height * 0.1,
                           ),
                   ),
@@ -230,12 +230,12 @@ class _MyLoginPageState extends State<MyLoginPage> {
                                           else
                                             showtoast("Enter the OTP");
                                         } else
-                                          verifyPhone(phoneNo);
-                                          /* Navigator.push(
+                                          // verifyPhone(phoneNo);
+                                          Navigator.push(
                                               context,
                                               new MaterialPageRoute(
                                                   builder: (context) =>
-                                                      Registration())); */
+                                                      Registration()));
                                       } else
                                         showtoast("Enter a valid phone number");
                                     }))
