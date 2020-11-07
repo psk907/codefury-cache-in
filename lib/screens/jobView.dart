@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:codefury2020/configurations/app_localizations.dart';
 import 'package:codefury2020/models/job.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +14,7 @@ class _JobModelState extends State<JobViewPage> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    double mediumfont = size.height * 0.035;
+    double mediumfont = size.height * 0.034;
     double smallfont = size.height * 0.02;
 
     TextStyle headingStyle =
@@ -25,7 +26,7 @@ class _JobModelState extends State<JobViewPage> {
         body: Stack(
       children: [
         SingleChildScrollView(
-          padding: EdgeInsets.fromLTRB(25, mediumfont * 3.2, 20, 0),
+          padding: EdgeInsets.fromLTRB(mediumfont, mediumfont * 3.2, 20, 0),
           physics: ClampingScrollPhysics(),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -38,7 +39,7 @@ class _JobModelState extends State<JobViewPage> {
                         borderRadius: BorderRadius.circular(30),
                         child: Image.asset(
                           'images/demoprof.png',
-                          width: size.width * 0.35,
+                          width: size.width * 0.28,
                         ),
                       ),
                       wspacing
@@ -49,10 +50,11 @@ class _JobModelState extends State<JobViewPage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        AutoSizeText(
                           widget.job.companyName,
+                          maxLines: 1,
                           style: TextStyle(
-                              fontSize: mediumfont,
+                              fontSize: mediumfont * 0.9,
                               fontWeight: FontWeight.w400),
                         ),
                         Text(
