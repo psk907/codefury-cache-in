@@ -1,6 +1,7 @@
 import 'package:codefury2020/tabs/hometab.dart';
 import 'package:codefury2020/tabs/maptab.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'configurations/app_localizations.dart';
@@ -149,7 +150,7 @@ class _MyHomePageState extends State<MyHomePage> {
         }
 
         // Otherwise, show something whilst waiting for initialization to complete
-        return CircularProgressIndicator();
+        return Scaffold(body: Center(child: CupertinoActivityIndicator()));
       },
     );
   }
