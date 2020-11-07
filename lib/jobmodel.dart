@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'configurations/app_localizations.dart';
 
 class JobModel extends StatefulWidget {
   @override
@@ -46,7 +47,7 @@ class _JobModelState extends State<JobModel> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                        AppLocalizations.of(context).translate('Company Name'),
+                        AppLocalizations.of(context).translate('Company name'),
                           style: TextStyle(
                               fontSize: mediumfont,
                               fontWeight: FontWeight.w400),
