@@ -77,6 +77,7 @@ class _HomeTabState extends State<HomeTab> {
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.symmetric(horizontal: 20),
                       hintText: 'Search',
+                      suffixIcon: Icon(Icons.search),
                       hintStyle: TextStyle(
                           color: Colors.grey, fontSize: mediumfont * 0.5),
                       filled: true,
@@ -96,8 +97,9 @@ class _HomeTabState extends State<HomeTab> {
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
                       return Container(
-                        height: MediaQuery.of(context).size.height * 0.5,
+                        height: MediaQuery.of(context).size.height * 0.6,
                         child: ListView.builder(
+                          physics: BouncingScrollPhysics(),
                           itemBuilder: (BuildContext context, int index) {
                             Job jobData =
                                 Job.fromJson(snapshot.data.docs[index].data());
@@ -120,7 +122,7 @@ class _HomeTabState extends State<HomeTab> {
                         ),
                       );
                     }
-                    return CircularProgressIndicator();
+                    return Center(child: CircularProgressIndicator());
                   },
                 ),
               ],

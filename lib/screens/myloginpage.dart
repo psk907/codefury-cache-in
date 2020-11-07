@@ -1,3 +1,4 @@
+import 'package:codefury2020/screens/registration.dart';
 import 'package:codefury2020/services/authservice.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -230,6 +231,11 @@ class _MyLoginPageState extends State<MyLoginPage> {
                                             showtoast("Enter the OTP");
                                         } else
                                           verifyPhone(phoneNo);
+                                          /* Navigator.push(
+                                              context,
+                                              new MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      Registration())); */
                                       } else
                                         showtoast("Enter a valid phone number");
                                     }))

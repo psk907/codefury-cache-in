@@ -30,7 +30,7 @@ class _JobModelState extends State<JobViewPage> {
         body: Stack(
       children: [
         Padding(
-          padding: EdgeInsets.fromLTRB(30, mediumfont * 2.95, 20, 0),
+          padding: EdgeInsets.fromLTRB(30, mediumfont * 3.4, 20, 0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -156,6 +156,16 @@ class _JobModelState extends State<JobViewPage> {
           child: IconButton(
               icon: Icon(Icons.chevron_left),
               iconSize: mediumfont * 1.5,
+              onPressed: () {
+                Navigator.pop(context);
+              }),
+        ),
+        
+        Align(
+          alignment: Alignment(1, -0.9),
+          child: IconButton(
+              icon: Icon(Icons.send_and_archive),
+              iconSize: mediumfont * 1.25,
               onPressed: () {
                 Navigator.pop(context);
               }),
