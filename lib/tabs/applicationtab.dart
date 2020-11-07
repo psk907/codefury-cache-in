@@ -4,6 +4,7 @@ import 'package:codefury2020/historycard.dart';
 import 'package:codefury2020/models/application.dart';
 import 'package:codefury2020/screens/registration.dart';
 import 'package:codefury2020/services/authservice.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -137,12 +138,15 @@ class _ApplicationTabState extends State<ApplicationTab> {
                       if(snapshot.hasData){
                         var data = snapshot.data.docs;
                         return ListView.builder(
+                          physics: BouncingScrollPhysics(),
                           itemCount: data.length,
                           itemBuilder: (BuildContext context, int index) {
                           return HistoryCard(case_no: 0,jobApplication: JobApplication.fromJson(data[index].data()),);
                          },
                         );
                       }
+                      else
+                      return Center(child:CupertinoActivityIndicator());
                     },
                     
                   ),
