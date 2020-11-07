@@ -1,9 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:codefury2020/configurations/app_localizations.dart';
 import 'package:codefury2020/historycard.dart';
+import 'package:codefury2020/models/application.dart';
 import 'package:codefury2020/screens/registration.dart';
 import 'package:codefury2020/services/authservice.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ApplicationTab extends StatefulWidget {
   @override
@@ -11,6 +14,19 @@ class ApplicationTab extends StatefulWidget {
 }
 
 class _ApplicationTabState extends State<ApplicationTab> {
+  String phoneNumber;
+  void init() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    phoneNumber = prefs.getString('Phone Number') ?? "0";
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    init();
+  }
+
   @override
   Widget build(BuildContext context) {
     SystemUiOverlayStyle.dark.copyWith(statusBarColor: Color(0xffffc45b));
@@ -62,7 +78,7 @@ class _ApplicationTabState extends State<ApplicationTab> {
                     Padding(
                       padding: const EdgeInsets.only(left: 10.0),
                       child: Text(
-                       AppLocalizations.of(context).translate('History'),
+                        AppLocalizations.of(context).translate('History'),
                         // "History",
                         style: headingStyle,
                       ),
@@ -93,10 +109,9 @@ class _ApplicationTabState extends State<ApplicationTab> {
                           onPressed: () {
                             // AuthService().signOut();
                             Navigator.push(
-                                                  context,
-                                                  new MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          Registration()));
+                                context,
+                                new MaterialPageRoute(
+                                    builder: (context) => Registration()));
                           },
                           child: Text(
                             "Change",
@@ -112,13 +127,24 @@ class _ApplicationTabState extends State<ApplicationTab> {
               Expanded(
                 flex: 9,
                 child: Container(
-                  child: ListView(
-                    // padding: const EdgeInsets.all(8),
-                    children: <Widget>[
-                      HistoryCard(1),
-                      HistoryCard(0),
-                      HistoryCard(2), //dummy
-                    ],
+                  child: StreamBuilder<QuerySnapshot>(
+                    stream: FirebaseFirestore.instance
+                        .collection('users')
+                        .doc(phoneNumber)
+                        .collection('applications')
+                        .snapshots(),
+                    builder: ( context, snapshot) {
+                      if(snapshot.hasData){
+                        var data = snapshot.data.docs;
+                        return ListView.builder(
+                          itemCount: data.length,
+                          itemBuilder: (BuildContext context, int index) {
+                          return HistoryCard(case_no: 0,jobApplication: JobApplication.fromJson(data[index].data()),);
+                         },
+                        );
+                      }
+                    },
+                    
                   ),
                 ),
               ),

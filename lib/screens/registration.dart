@@ -97,7 +97,7 @@ class _RegistrationPageState extends State<Registration> {
       addDetailsToSP(
         _namecontroller?.text ?? "none",
         _jobpostscontroller?.text.split('\n').toList() ?? "none",
-        _skillscontroller?.text.split('\n').toList() ?? "none",
+        _skillscontroller?.text ?? "none",
         dayandtime ?? DateTime.now(),
         _submissionlinkcontroller?.text ?? "none",
         _moredetailscontroller?.text ?? "none",
