@@ -1,4 +1,5 @@
 import 'package:codefury2020/historycard.dart';
+import 'package:codefury2020/services/authservice.dart';
 import 'package:flutter/material.dart';
 
 class ApplicationTab extends StatefulWidget {
@@ -82,7 +83,9 @@ class _ApplicationTabState extends State<ApplicationTab> {
                           ],
                         ),
                         FlatButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            AuthService().signOut();
+                          },
                           child: Text(
                             "Change",
                             style: TextStyle(

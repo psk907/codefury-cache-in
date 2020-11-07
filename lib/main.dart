@@ -1,5 +1,4 @@
 import 'package:codefury2020/services/authservice.dart';
-import 'package:codefury2020/services/firebaseUserProvider.dart';
 import 'package:codefury2020/tabs/hometab.dart';
 import 'package:codefury2020/tabs/maptab.dart';
 import 'package:firebase_core/firebase_core.dart';
