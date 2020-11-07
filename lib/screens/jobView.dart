@@ -1,7 +1,9 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:codefury2020/configurations/app_localizations.dart';
 import 'package:codefury2020/models/job.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class JobViewPage extends StatefulWidget {
   Job job;
@@ -25,6 +27,29 @@ class _JobModelState extends State<JobViewPage> {
       height: size.height * 0.05,
       thickness: 1,
     );
+
+    void submitApplication() async {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      Map<String,dynamic > data={
+          "title" :widget.job.title,
+       "uid":widget.job.uid  ,
+       "description":widget.job.description  ,
+       "job-span":widget.job.duration  ,
+       "salary":widget.job.salary  ,
+      "location" :widget.job.location  ,
+      "skills-appreciated":widget.job.reqdSkills  ,
+       "company-name":widget.job.companyName  ,
+       "daily-hours":widget.job.dailyHours,
+     "employer-name":widget.job.employerName  ,
+      "applicant-name":prefs.getString('name'),
+      "applicant-skills":prefs.getString('description'),
+      "applicant-dob":Timestamp.fromDate( DateTime.parse( prefs.getString('dob'))),
+      "applicant-bio":prefs.getString('bio'),
+      };
+      FirebaseFirestore.instance
+          .collection('users')
+          .doc(prefs.getString('Phone Number')).collection('applications').add(data);
+    }
 
     return Scaffold(
         body: Stack(
@@ -160,13 +185,13 @@ class _JobModelState extends State<JobViewPage> {
                 Navigator.pop(context);
               }),
         ),
-        
         Align(
           alignment: Alignment(1, -0.9),
           child: IconButton(
               icon: Icon(Icons.send_and_archive),
               iconSize: mediumfont * 1.25,
               onPressed: () {
+                submitApplication();
                 Navigator.pop(context);
               }),
         ),

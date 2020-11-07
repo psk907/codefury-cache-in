@@ -47,6 +47,8 @@ dependencies:
   google_sign_in: ^4.1.1
   provider: ^4.3.2+2
   intl: ^0.16.1
+  dash_chat: ^1.1.15
+
 
 
 

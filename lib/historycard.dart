@@ -1,3 +1,4 @@
+import 'package:codefury2020/models/application.dart';
 import 'package:flutter/material.dart';
 
 import 'configurations/app_localizations.dart';
@@ -8,7 +9,8 @@ import 'configurations/app_localizations.dart';
 
 class HistoryCard extends StatefulWidget {
   final int case_no;
-  HistoryCard(this.case_no);
+  final JobApplication jobApplication;
+  HistoryCard({this.case_no,this.jobApplication});
   @override
   _HistoryCardState createState() => _HistoryCardState();
 }
@@ -66,18 +68,18 @@ class _HistoryCardState extends State<HistoryCard> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      AppLocalizations.of(context).translate('Company Name'),
+                                     widget.jobApplication.companyName,
                                       style: TextStyle(
                                           fontSize: mediumfont * 0.7,
                                           fontWeight: FontWeight.w400),
                                     ),
                                     Text(
-                                      AppLocalizations.of(context).translate('Employer Name'),
+                                      widget.jobApplication.title,
                                       style: TextStyle(
                                           color: Colors.grey[700],
                                           fontSize: smallfont * 0.8,
                                           fontWeight: FontWeight.w400),
-                                    )
+                                    ),
                                   ],
                                 ))
                               ]),
