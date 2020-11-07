@@ -1,22 +1,73 @@
 import 'package:codefury2020/tabs/hometab.dart';
 import 'package:codefury2020/tabs/maptab.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'configurations/app_localizations.dart';
 import 'tabs/profiletab.dart';
+import 'models/language.dart';
 
 void main() {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+
+  static void setLocale(BuildContext context,Locale locale){
+    _MyAppState state=context.findAncestorStateOfType<_MyAppState>();
+    state.setLocale(locale);
+  }
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  Locale _locale;
+  void setLocale(Locale locale){
+    setState(() {
+     _locale=locale; 
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'CodeFury 2020 | Cache-in',
       theme: ThemeData(
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      locale: _locale,
+
+      // List all of the app's supported locales here
+      supportedLocales: [
+        Locale('en', 'US'),
+        Locale('sk', 'SK'),
+        Locale('hi', 'IN'),
+      ],
+      // These delegates make sure that the localization data for the proper language is loaded
+      localizationsDelegates: [
+        // THIS CLASS WILL BE ADDED LATER
+        // A class which loads the translations from JSON files
+        AppLocalizations.delegate,
+        // Built-in localization of basic text for Material widgets
+        GlobalMaterialLocalizations.delegate,
+        // Built-in localization for text direction LTR/RTL
+        GlobalWidgetsLocalizations.delegate,
+      ],
+      // Returns a locale which will be used by the app
+      localeResolutionCallback: (locale, supportedLocales) {
+        // Check if the current device locale is supported
+        for (var supportedLocale in supportedLocales) {
+          if (supportedLocale.languageCode == locale.languageCode &&
+              supportedLocale.countryCode == locale.countryCode) {
+            return supportedLocale;
+          }
+        }
+        // If the locale of the device is not supported, use the first one
+        // from the list (English, in this case).
+        return supportedLocales.first;
+      },
+
+      home: MyHomePage(title: 'CodeFury 2020'),
     );
   }
 }
@@ -37,6 +88,20 @@ class _MyHomePageState extends State<MyHomePage> {
     HomeTab(),
     ProfileTab(),
   ];
+
+  void _changeLanguage(Language language) {
+    Locale _temp;
+    switch(language.languageCode){
+      case 'en':
+      _temp=Locale(language.languageCode,'US');
+      break;
+      case 'hi':
+      _temp=Locale(language.languageCode,'IN');
+      break;
+    }
+    MyApp.setLocale(context,_temp);
+  }
+
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -47,7 +112,24 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text(
+          AppLocalizations.of(context).translate('welcome'),
+        ),
+        actions: [
+          DropdownButton(
+            underline: SizedBox(),
+            icon: Icon(Icons.language),
+            items: Language.languageList()
+                .map<DropdownMenuItem>((lang) => DropdownMenuItem(
+                      child: Text(lang.name),
+                      value: lang,
+                    ))
+                .toList(),
+            onChanged: ( language) {
+              _changeLanguage(language);
+            },
+          )
+        ],
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
@@ -61,7 +143,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.account_box),
-            label: 'Profile',
+            label: 'Applications',
           ),
         ],
         currentIndex: _selectedIndex,
