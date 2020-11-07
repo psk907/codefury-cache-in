@@ -1,5 +1,7 @@
 import 'package:codefury2020/configurations/app_localizations.dart';
+import 'package:codefury2020/historycard.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
 class ApplicationTab extends StatefulWidget {
   @override
@@ -19,63 +21,66 @@ class _ApplicationTabState extends State<ApplicationTab> {
     var wspacing = SizedBox(height: size.height * 0.05);
     return SafeArea(
         child: Padding(
-      padding: const EdgeInsets.fromLTRB(30, 50, 25, 0),
+      padding: const EdgeInsets.fromLTRB(28, 50, 20, 0),
       child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Text(
-              // TODO AppLocalizations.of(context).translate('application history'),
-              "History",
-              style: headingStyle,
-            ),
-            wspacing,
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Icon(
-                      Icons.location_on,
-                      size: mediumfont,
-                    ),
-                    SizedBox(width: size.width * 0.04),
-                    Text(
-                      "Mangalore",
-                      style: TextStyle(fontSize: smallfont * 1.25),
-                    )
-                  ],
-                ),
-                GestureDetector(
-                  onTap: () {},
-                  child: Text(
-                    "Change",
-                    style: TextStyle(fontSize: smallfont, color: Colors.indigo),
+            Flexible(
+              flex: 2,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    // TODO AppLocalizations.of(context).translate('application history'),
+                    "History",
+                    style: headingStyle,
                   ),
-                )
-              ],
-            ),
-            wspacing,
-            Container(
-                decoration:
-                    BoxDecoration(borderRadius: BorderRadius.circular(30)),
-                width: size.width,
-                height: size.height * 0.15,
-                child: Card(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      const ListTile(
-                        leading: Icon(Icons.grass_sharp),
-                        title: Text('Famring'),
-                        subtitle: Text('Shetty'),
+                  wspacing,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Icon(
+                            Icons.location_on,
+                            size: mediumfont,
+                          ),
+                          SizedBox(width: size.width * 0.04),
+                          Text(
+                            "Mangalore",
+                            style: TextStyle(fontSize: smallfont * 1.25),
+                          )
+                        ],
                       ),
-                      const Text('Salary : 5000', textAlign: TextAlign.left),
-                      const Text('Location : Udupi', textAlign: TextAlign.left),
+                      GestureDetector(
+                        onTap: () {},
+                        child: Text(
+                          "Change",
+                          style: TextStyle(
+                              fontSize: smallfont, color: Colors.indigo),
+                        ),
+                      )
                     ],
                   ),
-                ))
+                ],
+              ),
+            ),
+            Expanded(
+              flex: 9,
+              child: Container(
+                child: ListView(
+                  padding: const EdgeInsets.all(8),
+                  children: <Widget>[
+                    HistoryCard(1),
+                    HistoryCard(0),
+                    HistoryCard(2), //dummy
+                  ],
+                ),
+              ),
+            ),
           ]),
     ));
   }
