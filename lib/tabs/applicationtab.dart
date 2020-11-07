@@ -15,29 +15,28 @@ class _ApplicationTabState extends State<ApplicationTab> {
     double smallfont = size.height * 0.02;
 
     TextStyle headingStyle = TextStyle(
-        color: Colors.white,
+        color: Colors.black,
         fontSize: mediumfont * 1.4,
         fontWeight: FontWeight.w600);
     var wspacing = SizedBox(height: size.height * 0.02);
     return SafeArea(
         child: Stack(children: [
       Container(
-        height: size.height * 0.35,
+        height: size.height * 0.3,
         decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment
                 .bottomCenter, // 10% of the width, so there are ten blinds.
             colors: [
-              Colors.blue[600],
-              Colors.blue[500],
-              Colors.blue[400],
-              Colors.blue[300],
-              Colors.blue[200],
-              Colors.blue[100],
+              Color(0xffffc45b),
+              Color(0xffffcd74),
+              Color(0xffffd281),
+              Color(0xffffd78f),
+              Color(0xffffdc9d),
+              Color(0xffffe6b9),
               Colors.white
             ],
-            // repeats the gradient over the canvas
           ),
         ),
       ),
@@ -90,7 +89,7 @@ class _ApplicationTabState extends State<ApplicationTab> {
                           child: Text(
                             "Change",
                             style: TextStyle(
-                                fontSize: smallfont, color: Colors.grey[200]),
+                                fontSize: smallfont, color: Colors.grey[900]),
                           ),
                         )
                       ],

@@ -19,12 +19,13 @@ class _RegistrationPageState extends State<Registration> {
 
   bool loading = false;
 
-  List<Widget> questionnaire=new List();
-@override
+  List<Widget> questionnaire = new List();
+  @override
   void initState() {
     super.initState();
-    buildQuestionnaire( );
+    buildQuestionnaire();
   }
+
   void showSnackbar(String text) {
     _scaffoldKey.currentState.showSnackBar(
       SnackBar(
@@ -32,41 +33,38 @@ class _RegistrationPageState extends State<Registration> {
       ),
     );
   }
-  void buildQuestionnaire(){
 
+  void buildQuestionnaire() {
     questionnaire = [
-    Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(left: 20, top: 0),
-          child: Text(
-            "What's your name?",
-            textAlign: TextAlign.center,
-            style: TextStyle(
-
-                fontWeight: FontWeight.w600,
-                color: Colors.grey[700]),
+      Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 20, top: 0),
+            child: Text(
+              "What's your name?",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  fontWeight: FontWeight.w600, color: Colors.grey[700]),
+            ),
           ),
-        ),
-        SizedBox(
-          height: 20,//TODO: Make responsive
-        ),
-        Padding(
-            padding: EdgeInsets.only(left: 25.0, right: 25.0),
-            child: TextFormField(
-              keyboardType: TextInputType.phone,
-              decoration: InputDecoration(
-                hintText: ' Enter your full name',
-              ),
-              onChanged: (val) {
-                setState(() {});
-              },
-            )),
-      ],
-    ),
-  ];
+          SizedBox(
+            height: 20, //TODO: Make responsive
+          ),
+          Padding(
+              padding: EdgeInsets.only(left: 25.0, right: 25.0),
+              child: TextFormField(
+                keyboardType: TextInputType.phone,
+                decoration: InputDecoration(
+                  hintText: ' Enter your full name',
+                ),
+                onChanged: (val) {
+                  setState(() {});
+                },
+              )),
+        ],
+      ),
+    ];
   }
-
 
   showtoast(String text) => _scaffoldKey.currentState.showSnackBar(
         SnackBar(
