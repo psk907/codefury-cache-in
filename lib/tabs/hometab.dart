@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../jobmodel.dart';
 
 class HomeTab extends StatefulWidget {
   @override
@@ -8,6 +9,16 @@ class HomeTab extends StatefulWidget {
 class _HomeTabState extends State<HomeTab> {
   @override
   Widget build(BuildContext context) {
-    return Container(child: Text("main"));
+    return Column(
+      children: [
+        Container(child: Text("main")),
+        RaisedButton(onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => JobModel()),
+          );
+        })
+      ],
+    );
   }
 }
