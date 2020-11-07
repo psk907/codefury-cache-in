@@ -106,7 +106,7 @@ class _HomeTabState extends State<HomeTab> {
                       fontSize: mediumfont * 0.6, color: Colors.black),
                   decoration: InputDecoration(
                     contentPadding: EdgeInsets.symmetric(horizontal: 20),
-                    hintText: 'Search',
+                    hintText: AppLocalizations.of(context).translate('Search'),
                     hintStyle: TextStyle(
                         color: Colors.grey, fontSize: mediumfont * 0.5),
                     filled: true,
@@ -122,7 +122,7 @@ class _HomeTabState extends State<HomeTab> {
               Spacer(),
               StreamBuilder<QuerySnapshot>(
                 stream: FirebaseFirestore.instance
-                    .collection('employers')
+                    .collection(AppLocalizations.of(context).translate('Employers'))
                     .snapshots(),
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {

@@ -64,13 +64,13 @@ class _HistoryCardState extends State<HistoryCard> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      "Company Name",
+                                      AppLocalizations.of(context).translate('Company Name'),
                                       style: TextStyle(
                                           fontSize: mediumfont * 0.7,
                                           fontWeight: FontWeight.w400),
                                     ),
                                     Text(
-                                      "Employer name",
+                                      AppLocalizations.of(context).translate('Employer Name'),
                                       style: TextStyle(
                                           color: Colors.grey[700],
                                           fontSize: smallfont * 0.8,
@@ -97,8 +97,13 @@ class _HistoryCardState extends State<HistoryCard> {
                               ),
                             ),
                             label: Text(
+<<<<<<< HEAD
+                              AppLocalizations.of(context).translate('Details'),
+                              style: TextStyle(fontSize: smallfont * 0.75),
+=======
                               'Details',
                               style: TextStyle(fontSize: smallfont * 0.72),
+>>>>>>> e4a88c531f8bc57d567877f75e32fd91ae2a3df0
                             ),
                           ),
                           Chip(
@@ -112,8 +117,13 @@ class _HistoryCardState extends State<HistoryCard> {
                               ),
                             ),
                             label: Text(
+<<<<<<< HEAD
+                              AppLocalizations.of(context).translate('Contact'),
+                              style: TextStyle(fontSize: smallfont * 0.75),
+=======
                               'Contact',
                               style: TextStyle(fontSize: smallfont * 0.72),
+>>>>>>> e4a88c531f8bc57d567877f75e32fd91ae2a3df0
                             ),
                           ),
                           Chip(
@@ -125,8 +135,13 @@ class _HistoryCardState extends State<HistoryCard> {
                               ),
                             ),
                             label: Text(
+<<<<<<< HEAD
+                              AppLocalizations.of(context).translate('Location'),
+                              style: TextStyle(fontSize: smallfont * 0.75),
+=======
                               'Location',
                               style: TextStyle(fontSize: smallfont * 0.72),
+>>>>>>> e4a88c531f8bc57d567877f75e32fd91ae2a3df0
                             ),
                           ),
                         ],

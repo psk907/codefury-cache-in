@@ -23,6 +23,49 @@ class _ApplicationTabState extends State<ApplicationTab> {
         fontWeight: FontWeight.w600);
     var wspacing = SizedBox(height: size.height * 0.02);
     return SafeArea(
+<<<<<<< HEAD
+        child: Padding(
+      padding: const EdgeInsets.fromLTRB(28, 50, 20, 0),
+      child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Flexible(
+              flex: 2,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    // TODO AppLocalizations.of(context).translate('application history'),
+                    AppLocalizations.of(context).translate('History'),
+                    style: headingStyle,
+                  ),
+                  wspacing,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Icon(
+                            Icons.location_on,
+                            size: mediumfont,
+                          ),
+                          SizedBox(width: size.width * 0.04),
+                          Text(
+                            AppLocalizations.of(context).translate('Mangalore'),
+                            style: TextStyle(fontSize: smallfont * 1.25),
+                          )
+                        ],
+                      ),
+                      GestureDetector(
+                        onTap: () {},
+                        child: Text(
+                          AppLocalizations.of(context).translate('Change'),
+                          style: TextStyle(
+                              fontSize: smallfont, color: Colors.indigo),
+=======
         child: Stack(children: [
       Container(
         height: size.height * 0.4,
@@ -86,6 +129,7 @@ class _ApplicationTabState extends State<ApplicationTab> {
                                   fontSize: smallfont * 1.25),
                             )
                           ],
+>>>>>>> e4a88c531f8bc57d567877f75e32fd91ae2a3df0
                         ),
                         FlatButton(
                           onPressed: () {
