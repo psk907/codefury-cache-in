@@ -46,12 +46,15 @@ class _HistoryCardState extends State<HistoryCard> {
           message: messege,
           color: messegecol,
           child: Container(
-            decoration: BoxDecoration(borderRadius: BorderRadius.circular(30)),
             width: size.width,
             height: size.height * 0.17,
             child: Card(
+              elevation: 2,
+              shadowColor: Colors.grey[400],
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20)),
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(15, 15, 15, 0),
+                padding: const EdgeInsets.fromLTRB(10, 15, 10, 0),
                 child: Center(
                   child: Column(
                     children: [
@@ -101,7 +104,7 @@ class _HistoryCardState extends State<HistoryCard> {
                             ),
                             label: Text(
                               'Details',
-                              style: TextStyle(fontSize: smallfont * 0.75),
+                              style: TextStyle(fontSize: smallfont * 0.72),
                             ),
                           ),
                           Chip(
@@ -116,7 +119,7 @@ class _HistoryCardState extends State<HistoryCard> {
                             ),
                             label: Text(
                               'Contact',
-                              style: TextStyle(fontSize: smallfont * 0.75),
+                              style: TextStyle(fontSize: smallfont * 0.72),
                             ),
                           ),
                           Chip(
@@ -129,7 +132,7 @@ class _HistoryCardState extends State<HistoryCard> {
                             ),
                             label: Text(
                               'Location',
-                              style: TextStyle(fontSize: smallfont * 0.75),
+                              style: TextStyle(fontSize: smallfont * 0.72),
                             ),
                           ),
                         ],
