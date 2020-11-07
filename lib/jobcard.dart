@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'configurations/app_localizations.dart';
 import 'models/job.dart';
+import 'package:geocoder/geocoder.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class JobCard extends StatefulWidget {
   Job job;
@@ -10,6 +12,31 @@ class JobCard extends StatefulWidget {
 }
 
 class _JobCardState extends State<JobCard> {
+  Address storeaddress = new Address();
+  @override
+  void initState() {
+    super.initState();
+    _getAddress([widget.job.location.latitude, widget.job.location.longitude]);
+  }
+
+  _getAddress(List<dynamic> coordinates) async {
+    var addresses = await Geocoder.local.findAddressesFromCoordinates(
+        Coordinates(coordinates[0], coordinates[1]));
+    var firstresult = addresses.first;
+    setState(() {
+      storeaddress = firstresult;
+    });
+  }
+
+  _launchURL(String url) async {
+    // const url = 'https://flutter.dev';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -79,16 +106,18 @@ class _JobCardState extends State<JobCard> {
                     style: TextStyle(fontSize: smallfont * 0.85),
                   ),
                   FlatButton.icon(
-                      label: Text(
-                        AppLocalizations.of(context).translate('Place'),
-                        style: TextStyle(fontSize: smallfont),
-                      ),
-                      //TODO:
-                      icon: Icon(
-                        Icons.location_on,
-                        size: mediumfont * 0.8,
-                      ),
-                      onPressed: () {}),
+                    label: Text(
+                      'Show',
+                      style: TextStyle(fontSize: smallfont),
+                    ),
+                    //TODO:
+                    icon: Icon(
+                      Icons.location_on,
+                      size: mediumfont * 0.8,
+                    ),
+                    onPressed: () => _launchURL(
+                        'https://www.google.com/maps/search/?api=1&query=${widget.job.location.latitude},${widget.job.location.longitude}'),
+                  )
                 ],
               ),
               Spacer()
