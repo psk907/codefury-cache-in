@@ -3,7 +3,7 @@ import 'package:codefury2020/tabs/maptab.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'configurations/app_localizations.dart';
-import 'tabs/profiletab.dart';
+import 'tabs/applicationtab.dart';
 import 'models/language.dart';
 
 void main() {
@@ -11,22 +11,23 @@ void main() {
 }
 
 class MyApp extends StatefulWidget {
-
-  static void setLocale(BuildContext context,Locale locale){
-    _MyAppState state=context.findAncestorStateOfType<_MyAppState>();
+  static void setLocale(BuildContext context, Locale locale) {
+    _MyAppState state = context.findAncestorStateOfType<_MyAppState>();
     state.setLocale(locale);
   }
+
   @override
   _MyAppState createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
   Locale _locale;
-  void setLocale(Locale locale){
+  void setLocale(Locale locale) {
     setState(() {
-     _locale=locale; 
+      _locale = locale;
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -82,25 +83,12 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _selectedIndex = 0;
+  int _selectedIndex = 1;
   List<Widget> _children = <Widget>[
     MapTab(),
     HomeTab(),
-    ProfileTab(),
+    ApplicationTab(),
   ];
-
-  void _changeLanguage(Language language) {
-    Locale _temp;
-    switch(language.languageCode){
-      case 'en':
-      _temp=Locale(language.languageCode,'US');
-      break;
-      case 'hi':
-      _temp=Locale(language.languageCode,'IN');
-      break;
-    }
-    MyApp.setLocale(context,_temp);
-  }
 
   void _onItemTapped(int index) {
     setState(() {
@@ -111,26 +99,6 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          AppLocalizations.of(context).translate('welcome'),
-        ),
-        actions: [
-          DropdownButton(
-            underline: SizedBox(),
-            icon: Icon(Icons.language),
-            items: Language.languageList()
-                .map<DropdownMenuItem>((lang) => DropdownMenuItem(
-                      child: Text(lang.name),
-                      value: lang,
-                    ))
-                .toList(),
-            onChanged: ( language) {
-              _changeLanguage(language);
-            },
-          )
-        ],
-      ),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
