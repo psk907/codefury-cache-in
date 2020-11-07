@@ -87,9 +87,9 @@ class _HistoryCardState extends State<HistoryCard> {
                         spacing: 10,
                         children: [
                           Chip(
-                            backgroundColor: Colors.red[100],
+                            backgroundColor: Colors.amber[100],
                             avatar: CircleAvatar(
-                              backgroundColor: Colors.red[400],
+                              backgroundColor: Color(0xffffc45b),
                               child: Icon(
                                 Icons.format_align_justify,
                                 size: smallfont,
