@@ -108,11 +108,11 @@ class _ApplicationTabState extends State<ApplicationTab> {
                         ),
                         FlatButton(
                           onPressed: () {
-                            // AuthService().signOut();
-                            Navigator.push(
-                                context,
-                                new MaterialPageRoute(
-                                    builder: (context) => Registration()));
+                            AuthService().signOut();
+                            // Navigator.push(
+                            //     context,
+                            //     new MaterialPageRoute(
+                            //         builder: (context) => Registration()));
                           },
                           child: Text(
                             "Change",

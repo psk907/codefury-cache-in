@@ -1,10 +1,12 @@
 import 'package:codefury2020/configurations/app_localizations.dart';
+import 'package:codefury2020/models/language.dart';
 import 'package:codefury2020/screens/registration.dart';
 import 'package:codefury2020/services/authservice.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../main.dart';
 import './background.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -42,6 +44,9 @@ class _MyLoginPageState extends State<MyLoginPage> {
   Future<void> verifyPhone(phoneNo) async {
     final PhoneVerificationCompleted verified = (AuthCredential authResult) {
       AuthService().signIn(authResult, phoneNo);
+      Navigator.pushReplacement(context, MaterialPageRoute(
+      builder: (context) => Registration()
+  ));
     };
 
     final PhoneVerificationFailed verificationfailed =
@@ -77,11 +82,20 @@ class _MyLoginPageState extends State<MyLoginPage> {
         codeAutoRetrievalTimeout: autoTimeout);
   }
 
-  _saveDetails(String _authToken, String user) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString('auth-token', _authToken);
-    await prefs.setString('user', user);
+  void _changeLanguage(Language language) {
+    Locale _temp;
+    switch (language.languageCode) {
+      case 'en':
+        _temp = Locale(language.languageCode, 'US');
+        break;
+      case 'hi':
+        _temp = Locale(language.languageCode, 'IN');
+        break;
+    }
+    MyApp.setLocale(context, _temp);
   }
+
+
 
   showtoast(String text) => _scaffoldKey.currentState.showSnackBar(
         SnackBar(
@@ -135,7 +149,8 @@ class _MyLoginPageState extends State<MyLoginPage> {
                             Padding(
                               padding: const EdgeInsets.only(left: 25),
                               child: Text(
-                                AppLocalizations.of(context).translate('Hey\nthere,'),
+                                AppLocalizations.of(context)
+                                    .translate('Hey there,'),
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: headingfont,
@@ -150,7 +165,8 @@ class _MyLoginPageState extends State<MyLoginPage> {
                             Padding(
                               padding: const EdgeInsets.only(left: 20, top: 0),
                               child: Text(
-                                AppLocalizations.of(context).translate('Enter your credentials'),
+                                AppLocalizations.of(context)
+                                    .translate('Enter your credentials'),
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                     fontSize: regularfont,
@@ -170,7 +186,8 @@ class _MyLoginPageState extends State<MyLoginPage> {
                                       fontSize: mediumfont * 0.6),
                                   keyboardType: TextInputType.phone,
                                   decoration: InputDecoration(
-                                      hintText: AppLocalizations.of(context).translate('Enter your phone number'),
+                                      hintText: AppLocalizations.of(context)
+                                          .translate('Enter your phone number'),
                                       hintStyle: TextStyle(
                                           color: Colors.grey[400],
                                           fontSize: mediumfont * 0.6),
@@ -195,7 +212,8 @@ class _MyLoginPageState extends State<MyLoginPage> {
                                           fontSize: mediumfont * 0.6),
                                       keyboardType: TextInputType.phone,
                                       decoration: InputDecoration(
-                                          hintText: AppLocalizations.of(context).translate('Enter the OTP'),
+                                          hintText: AppLocalizations.of(context)
+                                              .translate('Enter the OTP'),
                                           prefixIcon: Icon(Icons.vpn_key)),
                                       onChanged: (val) {
                                         setState(() {
@@ -215,13 +233,16 @@ class _MyLoginPageState extends State<MyLoginPage> {
                                               ? CupertinoActivityIndicator()
                                               : codeSent
                                                   ? Text(
-
-                                            AppLocalizations.of(context).translate('Login'),
+                                                      AppLocalizations.of(
+                                                              context)
+                                                          .translate('Login'),
                                                       style: TextStyle(
                                                           fontSize: 20),
                                                     )
                                                   : Text(
-                                            AppLocalizations.of(context).translate('Verify'),
+                                                      AppLocalizations.of(
+                                                              context)
+                                                          .translate('Verify'),
                                                       style: TextStyle(
                                                           fontSize: 20),
                                                     )),
@@ -230,7 +251,8 @@ class _MyLoginPageState extends State<MyLoginPage> {
                                             BorderRadius.circular(12.0),
                                       ),
                                       onPressed: () {
-                                        if (!loading&&this.phoneNo != null &&
+                                        if (!loading &&
+                                            this.phoneNo != null &&
                                             this.phoneNo.contains(new RegExp(
                                                 r'^(\+91[\-\s]?)?[0]?(91)?[789]\d{9}$'))) {
                                           setState(() {
@@ -239,16 +261,15 @@ class _MyLoginPageState extends State<MyLoginPage> {
                                           AuthService()
                                               .savePhoneNumber(this.phoneNo);
                                           if (codeSent) {
-                                            if (smsCode !=
-                                                null) AuthService()
-                                                    .signInWithOTP(
-                                                        smsCode,
-                                                        verificationId,
-                                                        this.phoneNo);
-                                                
-                                             
+                                            if (smsCode != null)
+                                              AuthService().signInWithOTP(
+                                                  smsCode,
+                                                  verificationId,
+                                                  this.phoneNo);
                                             else
-                                              showtoast(AppLocalizations.of(context).translate('Enter the OTP'));
+                                              showtoast(AppLocalizations.of(
+                                                      context)
+                                                  .translate('Enter the OTP'));
                                           } else
                                             verifyPhone(phoneNo);
                                           /* Navigator.push(
@@ -257,13 +278,31 @@ class _MyLoginPageState extends State<MyLoginPage> {
                                                     builder: (context) =>
                                                         Registration())); */
                                         } else
-                                          showtoast(
-                                              AppLocalizations.of(context).translate('Enter the valid phone number'));
+                                          showtoast(AppLocalizations.of(context)
+                                              .translate(
+                                                  'Enter the valid phone number'));
                                       })),
                             )
                           ],
                         ),
                       ),
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment(0.9, -0.9),
+                    child: DropdownButton(
+                      underline: SizedBox(),
+                      icon: Icon(Icons.language),
+                      iconSize: mediumfont,
+                      items: Language.languageList()
+                          .map<DropdownMenuItem>((lang) => DropdownMenuItem(
+                                child: Text(lang.name),
+                                value: lang,
+                              ))
+                          .toList(),
+                      onChanged: (language) {
+                        _changeLanguage(language);
+                      },
                     ),
                   ),
                 ],

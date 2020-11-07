@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:codefury2020/main.dart';
 import 'package:codefury2020/screens/myloginpage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
