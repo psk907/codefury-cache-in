@@ -61,7 +61,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.account_box),
-            label: 'Profile',
+            label: 'Applications',
           ),
         ],
         currentIndex: _selectedIndex,
