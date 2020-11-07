@@ -29,7 +29,6 @@ class _JobCardState extends State<JobCard> {
   }
 
   _launchURL(String url) async {
-    // const url = 'https://flutter.dev';
     if (await canLaunch(url)) {
       await launch(url);
     } else {
