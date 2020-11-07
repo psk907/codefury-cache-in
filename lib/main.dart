@@ -113,7 +113,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          AppLocalizations.of(context).translate('first_string'),
+          AppLocalizations.of(context).translate('welcome'),
         ),
         actions: [
           DropdownButton(
