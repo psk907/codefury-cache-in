@@ -72,7 +72,7 @@ class _ApplicationTabState extends State<ApplicationTab> {
               flex: 9,
               child: Container(
                 child: ListView(
-                  padding: const EdgeInsets.all(8),
+                  // padding: const EdgeInsets.all(8),
                   children: <Widget>[
                     HistoryCard(1),
                     HistoryCard(0),

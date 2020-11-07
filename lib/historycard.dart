@@ -24,23 +24,6 @@ class _HistoryCardState extends State<HistoryCard> {
     var hspacing = SizedBox(height: size.height * 0.02);
     var wspacing = SizedBox(height: size.height * 0.05);
 
-    // var design = (widget.case_no == 0)
-    //     ? CircleAvatar(
-    //         backgroundColor: Colors.transparent,
-    //         child: Lottie.asset('images/no.json'),
-    //         radius: mediumfont * 1.15,
-    //       )
-    //     : (widget.case_no == 1)
-    //         ? CircleAvatar(
-    //             backgroundColor: Colors.transparent,
-    //             child: Lottie.asset('images/yes.json'),
-    //             radius: mediumfont * 1.18,
-    //           )
-    //         : CircleAvatar(
-    //             backgroundColor: Colors.transparent,
-    //             child: Lottie.asset('images/waiting.json'),
-    //             radius: mediumfont * 0.7,
-    //           );
     var design = CircleAvatar(
       radius: mediumfont,
       backgroundImage: AssetImage('images/demoprof.png'),
