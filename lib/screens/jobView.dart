@@ -1,8 +1,10 @@
 import 'package:codefury2020/configurations/app_localizations.dart';
+import 'package:codefury2020/models/job.dart';
 import 'package:flutter/material.dart';
 
-
 class JobViewPage extends StatefulWidget {
+  Job job;
+  JobViewPage({this.job});
   @override
   _JobModelState createState() => _JobModelState();
 }
@@ -48,26 +50,29 @@ class _JobModelState extends State<JobViewPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                        AppLocalizations.of(context).translate('Company name'),
+                          widget.job.companyName,
                           style: TextStyle(
                               fontSize: mediumfont,
                               fontWeight: FontWeight.w400),
                         ),
                         Text(
-                          AppLocalizations.of(context).translate('Employer name'),
+                          widget.job.employerName,
                           style: TextStyle(
                               color: Colors.grey[700],
                               fontSize: smallfont,
                               fontWeight: FontWeight.w400),
                         ),
                         FlatButton.icon(
-                            label: Text(AppLocalizations.of(context).translate('Place')),
+                            label: Text(AppLocalizations.of(context)
+                                .translate('Place')),
                             icon: Icon(Icons.location_on),
                             onPressed: () {}),
                         hspacing,
                         Text(
-                          AppLocalizations.of(context).translate('Need') + AppLocalizations.of(context).translate('plumber'),
-                          style: TextStyle(fontSize: mediumfont * 0.8),
+                          AppLocalizations.of(context).translate('Need') +
+                              " : " +
+                              widget.job.title,
+                          style: TextStyle(fontSize: mediumfont * 0.7),
                         )
                       ],
                     ),
@@ -76,49 +81,45 @@ class _JobModelState extends State<JobViewPage> {
                 ],
               ),
               SizedBox(height: size.height * 0.06),
-              Text(AppLocalizations.of(context).translate('About'), style: headingStyle),
+              Text(AppLocalizations.of(context).translate('About'),
+                  style: headingStyle),
               hspacing,
               Container(
-                child: Text(
-                    "FJGIERGJEROGJEROrjheiuhrfieufhreiheieheiheriegieuieueiuveivbeivbeivevuG\nljigehgieuhgiug\ntgeihutig\ntbitbti"),
+                child: Text(widget.job.description),
               ),
               wspacing,
-              Text(AppLocalizations.of(context).translate('Skills required'), style: headingStyle),
+              Text(AppLocalizations.of(context).translate('Skills required'),
+                  style: headingStyle),
               hspacing,
               Wrap(
                 spacing: 10,
-                children: [
-                  Chip(
-                    label: Text(AppLocalizations.of(context).translate('Random')),
-                  ),
-                  Chip(
-                    label: Text(AppLocalizations.of(context).translate('Skills')),
-                  ),
-                  Chip(
-                    label: Text(AppLocalizations.of(context).translate('to')),
-                  ),
-                  Chip(
-                    label: Text(AppLocalizations.of(context).translate('be')),
-                  ),
-                  Chip(
-                    label: Text(AppLocalizations.of(context).translate('put in here')),
-                  ),
-                ],
+                children: widget.job.reqdSkills
+                    .map((skill) => Chip(
+                            label: Text(
+                          skill.toString(),
+                        )))
+                    .toList(),
               ),
               wspacing,
-              Text(AppLocalizations.of(context).translate('Wages/Salary'), style: headingStyle),
+              Text(AppLocalizations.of(context).translate('Wages/Salary'),
+                  style: headingStyle),
               hspacing,
-              Text(AppLocalizations.of(context).translate('Deets')),
+              Text("Rs.${widget.job.salary}"),
               wspacing,
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(AppLocalizations.of(context).translate('Photos'), style: headingStyle),
-                  GestureDetector(onTap: () {}, child: Text(AppLocalizations.of(context).translate('See all')))
+                  Text(AppLocalizations.of(context).translate('Photos'),
+                      style: headingStyle),
+                  GestureDetector(
+                      onTap: () {},
+                      child: Text(
+                          AppLocalizations.of(context).translate('See all')))
                 ],
               ),
               hspacing,
-              Text(AppLocalizations.of(context).translate('all photos come here in a Carousel')),
+              Text(AppLocalizations.of(context)
+                  .translate('all photos come here in a Carousel')),
               wspacing,
             ],
           ),
