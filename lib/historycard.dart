@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'configurations/app_localizations.dart';
+
 //rejected 0
 //accepted 1
 //waiting rest
@@ -97,13 +99,8 @@ class _HistoryCardState extends State<HistoryCard> {
                               ),
                             ),
                             label: Text(
-<<<<<<< HEAD
                               AppLocalizations.of(context).translate('Details'),
                               style: TextStyle(fontSize: smallfont * 0.75),
-=======
-                              'Details',
-                              style: TextStyle(fontSize: smallfont * 0.72),
->>>>>>> e4a88c531f8bc57d567877f75e32fd91ae2a3df0
                             ),
                           ),
                           Chip(
@@ -117,13 +114,8 @@ class _HistoryCardState extends State<HistoryCard> {
                               ),
                             ),
                             label: Text(
-<<<<<<< HEAD
                               AppLocalizations.of(context).translate('Contact'),
                               style: TextStyle(fontSize: smallfont * 0.75),
-=======
-                              'Contact',
-                              style: TextStyle(fontSize: smallfont * 0.72),
->>>>>>> e4a88c531f8bc57d567877f75e32fd91ae2a3df0
                             ),
                           ),
                           Chip(
@@ -135,13 +127,8 @@ class _HistoryCardState extends State<HistoryCard> {
                               ),
                             ),
                             label: Text(
-<<<<<<< HEAD
                               AppLocalizations.of(context).translate('Location'),
                               style: TextStyle(fontSize: smallfont * 0.75),
-=======
-                              'Location',
-                              style: TextStyle(fontSize: smallfont * 0.72),
->>>>>>> e4a88c531f8bc57d567877f75e32fd91ae2a3df0
                             ),
                           ),
                         ],

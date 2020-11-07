@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'configurations/app_localizations.dart';
 import 'models/job.dart';
 
 class JobCard extends StatefulWidget {
@@ -68,9 +69,11 @@ class _JobCardState extends State<JobCard> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    AppLocalizations.of(context).translate('Salary/Wages: Rs.') +
-                        widget.job.salary.toString() +
-                        AppLocalizations.of(context).translate('\n Contract term:') +
+                    AppLocalizations.of(context)
+                            .translate('Salary/Wages: Rs.') +
+                        "${widget.job.salary} \n" +
+                        AppLocalizations.of(context)
+                            .translate('Contract term:') +
                         widget.job.duration +
                         AppLocalizations.of(context).translate('months'),
                     style: TextStyle(fontSize: smallfont * 0.85),

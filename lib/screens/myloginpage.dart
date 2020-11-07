@@ -214,6 +214,7 @@ class _MyLoginPageState extends State<MyLoginPage> {
                                               ? CupertinoActivityIndicator()
                                               : codeSent
                                                   ? Text(
+
                                             AppLocalizations.of(context).translate('Login'),
                                                       style: TextStyle(
                                                           fontSize: 20),

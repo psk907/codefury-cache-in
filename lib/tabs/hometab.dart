@@ -122,7 +122,7 @@ class _HomeTabState extends State<HomeTab> {
               Spacer(),
               StreamBuilder<QuerySnapshot>(
                 stream: FirebaseFirestore.instance
-                    .collection(AppLocalizations.of(context).translate('Employers'))
+                    .collection('employers')
                     .snapshots(),
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
