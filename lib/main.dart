@@ -132,21 +132,45 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
+
+    double mediumfont = size.height * 0.035;
     return Scaffold(
+      backgroundColor: Colors.grey[100],
+      resizeToAvoidBottomInset: false,
       bottomNavigationBar: BottomAppBar(
-          child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          IconButton(
-            icon: Icon(Icons.map_outlined),
-            onPressed: () => _onItemTapped(0),
-          ),
-          IconButton(icon: Icon(Icons.home), onPressed: () => _onItemTapped(1)),
-          IconButton(
-            icon: Icon(Icons.file_present),
-            onPressed: () => _onItemTapped(2),
-          ),
-        ],
+          child: Container(
+        color: Colors.grey[50],
+        padding: EdgeInsets.fromLTRB(mediumfont, 0, mediumfont, 0),
+        height: size.height * 0.065,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            IconButton(
+              icon: Icon(Icons.location_on),
+              iconSize: (_selectedIndex == 0) ? mediumfont * 1.1 : mediumfont,
+              color:
+                  (_selectedIndex == 0) ? Colors.teal[300] : Colors.grey[400],
+              tooltip: 'Maps',
+              onPressed: () => _onItemTapped(0),
+            ),
+            IconButton(
+                icon: Icon(Icons.home),
+                iconSize: (_selectedIndex == 1) ? mediumfont * 1.1 : mediumfont,
+                tooltip: 'Home',
+                color:
+                    (_selectedIndex == 1) ? Colors.teal[300] : Colors.grey[400],
+                onPressed: () => _onItemTapped(1)),
+            IconButton(
+              icon: Icon(Icons.file_present),
+              iconSize: (_selectedIndex == 2) ? mediumfont * 1.1 : mediumfont,
+              tooltip: 'Applications',
+              color:
+                  (_selectedIndex == 2) ? Colors.teal[300] : Colors.grey[400],
+              onPressed: () => _onItemTapped(2),
+            ),
+          ],
+        ),
       )),
       body: _children[_selectedIndex],
     );

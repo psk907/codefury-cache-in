@@ -1,6 +1,8 @@
+import 'package:codefury2020/configurations/app_localizations.dart';
 import 'package:codefury2020/historycard.dart';
 import 'package:codefury2020/services/authservice.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class ApplicationTab extends StatefulWidget {
   @override
@@ -10,6 +12,8 @@ class ApplicationTab extends StatefulWidget {
 class _ApplicationTabState extends State<ApplicationTab> {
   @override
   Widget build(BuildContext context) {
+    SystemUiOverlayStyle.dark.copyWith(statusBarColor: Color(0xffffc45b));
+
     var size = MediaQuery.of(context).size;
     double mediumfont = size.height * 0.035;
     double smallfont = size.height * 0.02;
@@ -22,7 +26,7 @@ class _ApplicationTabState extends State<ApplicationTab> {
     return SafeArea(
         child: Stack(children: [
       Container(
-        height: size.height * 0.3,
+        height: size.height * 0.4,
         decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
@@ -35,7 +39,9 @@ class _ApplicationTabState extends State<ApplicationTab> {
               Color(0xffffd78f),
               Color(0xffffdc9d),
               Color(0xffffe6b9),
-              Colors.white
+              Colors.white,
+              Colors.grey[50],
+              Colors.grey[100]
             ],
           ),
         ),
@@ -55,8 +61,8 @@ class _ApplicationTabState extends State<ApplicationTab> {
                     Padding(
                       padding: const EdgeInsets.only(left: 10.0),
                       child: Text(
-                        // TODO AppLocalizations.of(context).translate('application history'),
-                        "History",
+                       AppLocalizations.of(context).translate('History'),
+                        // "History",
                         style: headingStyle,
                       ),
                     ),

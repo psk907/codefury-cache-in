@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'configurations/app_localizations.dart';
+
 //rejected 0
 //accepted 1
 //waiting rest
@@ -64,13 +66,13 @@ class _HistoryCardState extends State<HistoryCard> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      "Company Name",
+                                      AppLocalizations.of(context).translate('Company Name'),
                                       style: TextStyle(
                                           fontSize: mediumfont * 0.7,
                                           fontWeight: FontWeight.w400),
                                     ),
                                     Text(
-                                      "Employer name",
+                                      AppLocalizations.of(context).translate('Employer Name'),
                                       style: TextStyle(
                                           color: Colors.grey[700],
                                           fontSize: smallfont * 0.8,
@@ -97,8 +99,8 @@ class _HistoryCardState extends State<HistoryCard> {
                               ),
                             ),
                             label: Text(
-                              'Details',
-                              style: TextStyle(fontSize: smallfont * 0.72),
+                              AppLocalizations.of(context).translate('Details'),
+                              style: TextStyle(fontSize: smallfont * 0.75),
                             ),
                           ),
                           Chip(
@@ -112,8 +114,8 @@ class _HistoryCardState extends State<HistoryCard> {
                               ),
                             ),
                             label: Text(
-                              'Contact',
-                              style: TextStyle(fontSize: smallfont * 0.72),
+                              AppLocalizations.of(context).translate('Contact'),
+                              style: TextStyle(fontSize: smallfont * 0.75),
                             ),
                           ),
                           Chip(
@@ -125,8 +127,8 @@ class _HistoryCardState extends State<HistoryCard> {
                               ),
                             ),
                             label: Text(
-                              'Location',
-                              style: TextStyle(fontSize: smallfont * 0.72),
+                              AppLocalizations.of(context).translate('Location'),
+                              style: TextStyle(fontSize: smallfont * 0.75),
                             ),
                           ),
                         ],

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../historycard.dart';
+import '../main.dart';
 import './background.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -82,7 +83,7 @@ class _RegistrationPageState extends State<Registration> {
 
   onPressRegister() {
     if (!_formKey.currentState.validate()) {
-      showSnackbar('Fill in the required fields');
+      
     } else {
       setState(() {
         this.isLoading = true;
@@ -301,6 +302,11 @@ class _RegistrationPageState extends State<Registration> {
         floatingActionButton: FloatingActionButton.extended(
           onPressed: () {
             onPressRegister();
+            Navigator.pushReplacement(
+                                                context,
+                                                new MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        MyHomePage()));
           },
           icon: Icon(Icons.navigate_next),
           label: Text("Submit"),

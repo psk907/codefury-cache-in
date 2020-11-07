@@ -5,6 +5,7 @@ import 'package:codefury2020/models/job.dart';
 import 'package:codefury2020/models/language.dart';
 import 'package:codefury2020/screens/jobView.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../main.dart';
 
 class HomeTab extends StatefulWidget {
@@ -28,6 +29,8 @@ class _HomeTabState extends State<HomeTab> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle.dark.copyWith(statusBarColor: Color(0xffffc45b)));
     var size = MediaQuery.of(context).size;
     double mediumfont = size.height * 0.035;
     // double smallfont = size.height * 0.02;
@@ -39,7 +42,7 @@ class _HomeTabState extends State<HomeTab> {
     return SafeArea(
         child: Stack(children: [
       Container(
-        height: size.height * 0.35,
+        height: size.height * 0.4,
         decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
@@ -52,7 +55,9 @@ class _HomeTabState extends State<HomeTab> {
               Color(0xffffd78f),
               Color(0xffffdc9d),
               Color(0xffffe6b9),
-              Colors.white
+              Colors.white,
+              Colors.grey[50],
+              Colors.grey[100]
             ],
           ),
         ),
@@ -101,7 +106,7 @@ class _HomeTabState extends State<HomeTab> {
                       fontSize: mediumfont * 0.6, color: Colors.black),
                   decoration: InputDecoration(
                     contentPadding: EdgeInsets.symmetric(horizontal: 20),
-                    hintText: 'Search',
+                    hintText: AppLocalizations.of(context).translate('Search'),
                     hintStyle: TextStyle(
                         color: Colors.grey, fontSize: mediumfont * 0.5),
                     filled: true,

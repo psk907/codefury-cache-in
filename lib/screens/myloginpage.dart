@@ -2,6 +2,7 @@ import 'package:codefury2020/screens/registration.dart';
 import 'package:codefury2020/services/authservice.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import './background.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -97,9 +98,15 @@ class _MyLoginPageState extends State<MyLoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
+      statusBarColor: Colors.teal[600],
+    ));
+
     var size = MediaQuery.of(context).size;
     double headingfont = size.height * 0.075;
     double regularfont = size.height * 0.025;
+    double mediumfont = size.height * 0.035;
+
     return SafeArea(
       child: Scaffold(
         key: _scaffoldKey,
@@ -110,15 +117,6 @@ class _MyLoginPageState extends State<MyLoginPage> {
               child: Stack(
                 alignment: AlignmentDirectional.bottomCenter,
                 children: [
-                  Positioned(
-                    bottom: 1,
-                    child: MediaQuery.of(context).viewInsets.bottom > 20
-                        ? Container()
-                        : Image.asset(
-                            'assets/logo.png',
-                            height: size.height * 0.1,
-                          ),
-                  ),
                   Align(
                     alignment: Alignment.topCenter,
                     child: SingleChildScrollView(
@@ -166,10 +164,19 @@ class _MyLoginPageState extends State<MyLoginPage> {
                                 padding:
                                     EdgeInsets.only(left: 25.0, right: 25.0),
                                 child: TextFormField(
+                                  style: TextStyle(
+                                      color: Colors.grey[900],
+                                      fontSize: mediumfont * 0.6),
                                   keyboardType: TextInputType.phone,
                                   decoration: InputDecoration(
-                                      hintText: ' Enter your phone number',
-                                      prefixText: '+91',
+                                      hintText: 'Enter your phone number',
+                                      hintStyle: TextStyle(
+                                          color: Colors.grey[400],
+                                          fontSize: mediumfont * 0.6),
+                                      prefixText: '+91 ',
+                                      prefixStyle: TextStyle(
+                                          color: Colors.grey[800],
+                                          fontSize: mediumfont * 0.6),
                                       prefixIcon: Icon(Icons.phone)),
                                   onChanged: (val) {
                                     setState(() {
@@ -180,8 +187,11 @@ class _MyLoginPageState extends State<MyLoginPage> {
                             codeSent
                                 ? Padding(
                                     padding: EdgeInsets.only(
-                                        left: 25.0, right: 25.0),
+                                        left: 25.0, right: 25.0, top: 10),
                                     child: TextFormField(
+                                      style: TextStyle(
+                                          color: Colors.grey[900],
+                                          fontSize: mediumfont * 0.6),
                                       keyboardType: TextInputType.phone,
                                       decoration: InputDecoration(
                                           hintText: 'Enter OTP',
@@ -194,51 +204,56 @@ class _MyLoginPageState extends State<MyLoginPage> {
                                     ))
                                 : Container(),
                             Padding(
-                                padding: EdgeInsets.only(
-                                    left: 25.0, right: 25.0, top: 10),
-                                child: RaisedButton(
-                                    child: Center(
-                                        child: loading
-                                            ? CupertinoActivityIndicator()
-                                            : codeSent
-                                                ? Text(
-                                                    'Login',
-                                                    style:
-                                                        TextStyle(fontSize: 20),
-                                                  )
-                                                : Text(
-                                                    'Verify',
-                                                    style:
-                                                        TextStyle(fontSize: 20),
-                                                  )),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(12.0),
-                                    ),
-                                    onPressed: () {
-                                      if (this.phoneNo != null &&
-                                          this.phoneNo.contains(new RegExp(
-                                              r'^(\+91[\-\s]?)?[0]?(91)?[789]\d{9}$'))) {
-                                        setState(() {
-                                          loading = true;
-                                        });
-                                        AuthService()
-                                            .savePhoneNumber(this.phoneNo);
-                                        if (codeSent) {
-                                          if (smsCode != null)
-                                            AuthService().signInWithOTP(
-                                                smsCode, verificationId);
-                                          else
-                                            showtoast("Enter the OTP");
+                              padding: EdgeInsets.only(
+                                  left: 25.0, right: 25.0, top: 40),
+                              child: Container(
+                                  height: size.height * 0.06,
+                                  child: RaisedButton(
+                                      child: Center(
+                                          child: loading
+                                              ? CupertinoActivityIndicator()
+                                              : codeSent
+                                                  ? Text(
+                                                      'Login',
+                                                      style: TextStyle(
+                                                          fontSize: 20),
+                                                    )
+                                                  : Text(
+                                                      'Verify',
+                                                      style: TextStyle(
+                                                          fontSize: 20),
+                                                    )),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(12.0),
+                                      ),
+                                      onPressed: () {
+                                        if (this.phoneNo != null &&
+                                            this.phoneNo.contains(new RegExp(
+                                                r'^(\+91[\-\s]?)?[0]?(91)?[789]\d{9}$'))) {
+                                          setState(() {
+                                            loading = true;
+                                          });
+                                          AuthService()
+                                              .savePhoneNumber(this.phoneNo);
+                                          if (codeSent) {
+                                            if (smsCode != null)
+                                              AuthService().signInWithOTP(
+                                                  smsCode, verificationId);
+                                            else
+                                              showtoast("Enter the OTP");
+                                          } else
+                                            // verifyPhone(phoneNo);
+                                          Navigator.pushReplacement(
+                                                context,
+                                                new MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        Registration()));
                                         } else
-                                          // verifyPhone(phoneNo);
-                                          Navigator.push(
-                                              context,
-                                              new MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      Registration()));
-                                      } else
-                                        showtoast("Enter a valid phone number");
-                                    }))
+                                          showtoast(
+                                              "Enter a valid phone number");
+                                      })),
+                            )
                           ],
                         ),
                       ),
