@@ -47,7 +47,7 @@ class _PlacesSearchMapState extends State<PlacesSearchMap> {
 
   Future<void> _getMarkers() async {
     QuerySnapshot qs =
-        await FirebaseFirestore.instance.collection('jobs').get();
+        await FirebaseFirestore.instance.collection('employers').get();
     List<Job> jobs =
         qs.docs.map((employer) => Job.fromJson(employer.data())).toList();
 

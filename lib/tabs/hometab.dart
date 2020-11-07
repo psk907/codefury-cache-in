@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:codefury2020/configurations/app_localizations.dart';
 import 'package:codefury2020/models/language.dart';
+import 'package:codefury2020/screens/jobView.dart';
 import 'package:flutter/material.dart';
-import '../jobmodel.dart';
 import '../main.dart';
 
 class HomeTab extends StatefulWidget {
@@ -66,7 +66,7 @@ class _HomeTabState extends State<HomeTab> {
                 Container(child: Text("Search bar")),
                 StreamBuilder<QuerySnapshot>(
                   stream:
-                      FirebaseFirestore.instance.collection('jobs').snapshots(),
+                      FirebaseFirestore.instance.collection('employers').snapshots(),
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
                       return Container(
@@ -81,7 +81,7 @@ class _HomeTabState extends State<HomeTab> {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => JobModel()),
+                                        builder: (context) => JobViewPage()),
                                   );
                                 });
                           },

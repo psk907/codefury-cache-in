@@ -1,12 +1,13 @@
+import 'package:codefury2020/configurations/app_localizations.dart';
 import 'package:flutter/material.dart';
-import 'configurations/app_localizations.dart';
 
-class JobModel extends StatefulWidget {
+
+class JobViewPage extends StatefulWidget {
   @override
   _JobModelState createState() => _JobModelState();
 }
 
-class _JobModelState extends State<JobModel> {
+class _JobModelState extends State<JobViewPage> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -75,49 +76,49 @@ class _JobModelState extends State<JobModel> {
                 ],
               ),
               SizedBox(height: size.height * 0.06),
-              Text("About", style: headingStyle),
+              Text(AppLocalizations.of(context).translate('About'), style: headingStyle),
               hspacing,
               Container(
                 child: Text(
                     "FJGIERGJEROGJEROrjheiuhrfieufhreiheieheiheriegieuieueiuveivbeivbeivevuG\nljigehgieuhgiug\ntgeihutig\ntbitbti"),
               ),
               wspacing,
-              Text("Skills Required", style: headingStyle),
+              Text(AppLocalizations.of(context).translate('Skills required'), style: headingStyle),
               hspacing,
               Wrap(
                 spacing: 10,
                 children: [
                   Chip(
-                    label: Text('Random'),
+                    label: Text(AppLocalizations.of(context).translate('Random')),
                   ),
                   Chip(
-                    label: Text('Skills'),
+                    label: Text(AppLocalizations.of(context).translate('Skills')),
                   ),
                   Chip(
-                    label: Text('to '),
+                    label: Text(AppLocalizations.of(context).translate('to')),
                   ),
                   Chip(
-                    label: Text('be'),
+                    label: Text(AppLocalizations.of(context).translate('be')),
                   ),
                   Chip(
-                    label: Text('put in hereeee'),
+                    label: Text(AppLocalizations.of(context).translate('put in here')),
                   ),
                 ],
               ),
               wspacing,
-              Text("Wages/Salary", style: headingStyle),
+              Text(AppLocalizations.of(context).translate('Wages/Salary'), style: headingStyle),
               hspacing,
-              Text("Deets"),
+              Text(AppLocalizations.of(context).translate('Deets')),
               wspacing,
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("Photos", style: headingStyle),
-                  GestureDetector(onTap: () {}, child: Text("See all"))
+                  Text(AppLocalizations.of(context).translate('Photos'), style: headingStyle),
+                  GestureDetector(onTap: () {}, child: Text(AppLocalizations.of(context).translate('See all')))
                 ],
               ),
               hspacing,
-              Text("all photos come here in a carosel"),
+              Text(AppLocalizations.of(context).translate('all photos come here in a Carousel')),
               wspacing,
             ],
           ),
