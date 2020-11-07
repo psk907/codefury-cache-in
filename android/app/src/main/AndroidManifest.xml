@@ -9,7 +9,14 @@
         android:name="io.flutter.app.FlutterApplication"
         android:label="CodeFury 2020"
         android:icon="@mipmap/ic_launcher">
-        <activity
+          
+        <!-- Google Maps API key !--> 
+        <meta-data
+            android:name="com.google.android.geo.API_KEY" 
+            android:value="AIzaSyB-jnyKLkrM3EDeN4vn9al-BO6C89uq8vI"
+          />
+        
+          <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
             android:theme="@style/LaunchTheme"

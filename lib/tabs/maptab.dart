@@ -1,3 +1,4 @@
+import 'package:codefury2020/screens/places_search_map.dart';
 import 'package:flutter/material.dart';
 
 class MapTab extends StatefulWidget {
@@ -8,6 +9,6 @@ class MapTab extends StatefulWidget {
 class _MapTabState extends State<MapTab> {
   @override
   Widget build(BuildContext context) {
-    return Container(child: Text("map"));
+    return PlacesSearchMap();
   }
 }
