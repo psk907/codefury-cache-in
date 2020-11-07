@@ -1,7 +1,5 @@
-import 'package:codefury2020/configurations/app_localizations.dart';
 import 'package:codefury2020/historycard.dart';
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
 
 class ApplicationTab extends StatefulWidget {
   @override
@@ -19,8 +17,7 @@ class _ApplicationTabState extends State<ApplicationTab> {
         color: Colors.white,
         fontSize: mediumfont * 1.4,
         fontWeight: FontWeight.w600);
-    var hspacing = SizedBox(height: size.height * 0.02);
-    var wspacing = SizedBox(height: size.height * 0.025);
+    var wspacing = SizedBox(height: size.height * 0.02);
     return SafeArea(
         child: Stack(children: [
       Container(
@@ -44,7 +41,7 @@ class _ApplicationTabState extends State<ApplicationTab> {
         ),
       ),
       Padding(
-        padding: const EdgeInsets.fromLTRB(28, 50, 20, 0),
+        padding: const EdgeInsets.fromLTRB(20, 50, 20, 0),
         child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
@@ -55,10 +52,13 @@ class _ApplicationTabState extends State<ApplicationTab> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      // TODO AppLocalizations.of(context).translate('application history'),
-                      "History",
-                      style: headingStyle,
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10.0),
+                      child: Text(
+                        // TODO AppLocalizations.of(context).translate('application history'),
+                        "History",
+                        style: headingStyle,
+                      ),
                     ),
                     wspacing,
                     Row(
@@ -75,14 +75,15 @@ class _ApplicationTabState extends State<ApplicationTab> {
                             SizedBox(width: size.width * 0.04),
                             Text(
                               "Mangalore",
+                              //TODO CHANGE LOCATION
                               style: TextStyle(
                                   color: Colors.black87,
                                   fontSize: smallfont * 1.25),
                             )
                           ],
                         ),
-                        GestureDetector(
-                          onTap: () {},
+                        FlatButton(
+                          onPressed: () {},
                           child: Text(
                             "Change",
                             style: TextStyle(

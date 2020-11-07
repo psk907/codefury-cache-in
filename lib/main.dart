@@ -130,6 +130,8 @@ class _MyHomePageState extends State<MyHomePage> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 IconButton(
+                  disabledColor: Colors.grey,
+                  focusColor: Colors.lightBlueAccent,
                   icon: Icon(Icons.map_outlined),
                   onPressed: () => _onItemTapped(0),
                 ),

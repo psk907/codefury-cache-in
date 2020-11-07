@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
 
 //rejected 0
 //accepted 1
@@ -18,11 +17,6 @@ class _HistoryCardState extends State<HistoryCard> {
     var size = MediaQuery.of(context).size;
     double mediumfont = size.height * 0.035;
     double smallfont = size.height * 0.02;
-
-    TextStyle headingStyle =
-        TextStyle(fontSize: mediumfont * 1.25, fontWeight: FontWeight.w600);
-    var hspacing = SizedBox(height: size.height * 0.02);
-    var wspacing = SizedBox(height: size.height * 0.05);
 
     var design = CircleAvatar(
       radius: mediumfont,
