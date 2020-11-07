@@ -1,11 +1,13 @@
 import 'dart:convert';
 import 'package:codefury2020/main.dart';
+import 'package:codefury2020/services/authservice.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
+import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import './background.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class MyLoginPage extends StatefulWidget {
   MyLoginPage({Key key}) : super(key: key);
@@ -15,26 +17,61 @@ class MyLoginPage extends StatefulWidget {
 }
 
 class _MyLoginPageState extends State<MyLoginPage> {
-  final formKey = new GlobalKey<FormState>();
-  final _scaffoldKey = new GlobalKey<ScaffoldState>();
-  final TextEditingController emailController = new TextEditingController();
-  final TextEditingController passwordController = new TextEditingController();
-  bool isLoading = false;
-  final RegExp emailValidatorRegExp =
-      RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
-  @override
-  void initState() {
-    isLoading = false;
-    super.initState();
+  final formKey = new GlobalKey<FormState>();
+
+  String phoneNo, verificationId, smsCode;
+
+  bool codeSent = false;
+
+  void showSnackbar(String text) {
+    _scaffoldKey.currentState.showSnackBar(
+      SnackBar(
+        content: Text(text),
+      ),
+    );
   }
+
+
+
 
   @override
   void dispose() {
-    emailController.dispose();
-    passwordController.dispose();
     super.dispose();
   }
+
+  
+  Future<void> verifyPhone(phoneNo) async {
+    final PhoneVerificationCompleted verified = (AuthCredential authResult) {
+      AuthService().signIn(authResult);
+    };
+
+    final PhoneVerificationFailed verificationfailed =
+        (FirebaseAuthException authException) {
+      print('${authException.message}');
+    };
+
+    final PhoneCodeSent smsSent = (String verId, [int forceResend]) {
+      this.verificationId = verId;
+      setState(() {
+        this.codeSent = true;
+      });
+    };
+
+    final PhoneCodeAutoRetrievalTimeout autoTimeout = (String verId) {
+      this.verificationId = verId;
+    };
+
+    await FirebaseAuth.instance.verifyPhoneNumber(
+        phoneNumber: phoneNo,
+        timeout: const Duration(seconds: 5),
+        verificationCompleted: verified,
+        verificationFailed: verificationfailed,
+        codeSent: smsSent,
+        codeAutoRetrievalTimeout: autoTimeout);
+  }
+
 
   _saveDetails(String _authToken, String user) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -42,7 +79,7 @@ class _MyLoginPageState extends State<MyLoginPage> {
     await prefs.setString('user', user);
   }
 
-  _attemptLogin(String _email, _password) async {
+  /* _attemptLogin(String _email, _password) async {
     String url = 'https://ecommerce-calculator.herokuapp.com/api/MPC/login';
     Map<String, String> headers = {"Content-type": "application/json"};
     var postobj = jsonEncode({
@@ -50,17 +87,16 @@ class _MyLoginPageState extends State<MyLoginPage> {
       "password": _password,
     });
     print("POST: " + (postobj));
-    String message='';
-    Response response;
+    String message = '';
+    http.Response response;
     var respobj;
     try {
       response = await post(url, headers: headers, body: postobj);
-        respobj = json.decode(response.body);
-    message = respobj["message"] ?? "Null";
+      respobj = json.decode(response.body);
+      message = respobj["message"] ?? "Null";
     } catch (e) {
       print("Caught Exception");
     }
-  
 
     if (message == "loggedIn") {
       var user = json.encode(respobj["user"]);
@@ -84,7 +120,7 @@ class _MyLoginPageState extends State<MyLoginPage> {
       isLoading = false;
     });
   }
-
+ */
   showtoast(String text) => _scaffoldKey.currentState.showSnackBar(
         SnackBar(
           content: Text(text),
@@ -106,7 +142,6 @@ class _MyLoginPageState extends State<MyLoginPage> {
     double regularfont = size.height * 0.025;
     return SafeArea(
       child: Scaffold(
-        
         key: _scaffoldKey,
         body: Form(
           key: formKey,
@@ -117,10 +152,12 @@ class _MyLoginPageState extends State<MyLoginPage> {
                 children: [
                   Positioned(
                     bottom: 1,
-                    child: MediaQuery.of(context).viewInsets.bottom>20?Container():Image.asset(
-                      'assets/shopocus.png',
-                      height: size.height * 0.1,
-                    ),
+                    child: MediaQuery.of(context).viewInsets.bottom > 20
+                        ? Container()
+                        : Image.asset(
+                            'assets/shopocus.png',
+                            height: size.height * 0.1,
+                          ),
                   ),
                   Align(
                     alignment: Alignment.topCenter,
@@ -166,125 +203,45 @@ class _MyLoginPageState extends State<MyLoginPage> {
                               height: size.height * 0.04,
                             ),
                             Padding(
-                                padding: EdgeInsets.only(bottom: 15, right: 40),
-                                child: TextFormField(
-                                  keyboardType: TextInputType.emailAddress,
-                                  autocorrect: true,
-                                  controller: emailController,
-                                  validator: (value) {
-                                    if (value.isEmpty) {
-                                      return "Please fill in your email ID";
-                                    } else if (!emailValidatorRegExp
-                                        .hasMatch(value)) {
-                                      return "Invalid email address";
-                                    }
-                                    return null;
-                                  },
-                                  decoration: InputDecoration(
-                                    labelText: "Email Address",
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.only(
-                                          topRight: Radius.circular(30),
-                                          bottomRight: Radius.circular(30)),
-                                      borderSide:
-                                          BorderSide(color: Colors.grey),
-                                    ),
-                                    floatingLabelBehavior:
-                                        FloatingLabelBehavior.auto,
-                                    prefixIcon: Padding(
-                                      padding: EdgeInsets.all(12),
-                                      child: SvgPicture.asset(
-                                        "assets/Mail.svg",
-                                        color: Colors.grey[900],
-                                      ),
-                                    ),
-                                  ),
-                                )),
-                            Padding(
-                                padding: EdgeInsets.fromLTRB(0, 15, 40, 0),
-                                child: TextFormField(
-                                  controller: passwordController,
-                                  obscureText: true,
-                                  validator: (value) {
-                                    if (value.isEmpty) {
-                                      return "Password cannot be empty";
-                                    }
-
-                                    return null;
-                                  },
-                                  decoration: InputDecoration(
-                                    labelText: "Password",
-                                    floatingLabelBehavior:
-                                        FloatingLabelBehavior.auto,
-                                    prefixIcon: Padding(
-                                      padding: EdgeInsets.all(12),
-                                      child: SvgPicture.asset("assets/Lock.svg",
-                                          color: Colors.grey[900]),
-                                    ),
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.only(
-                                          topRight: Radius.circular(30),
-                                          bottomRight: Radius.circular(30)),
-                                      borderSide:
-                                          BorderSide(color: Colors.grey),
-                                    ),
-                                  ),
-                                )),
-                            SizedBox(
-                              height: size.height * 0.06,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                FlatButton(
-                                  child: Text(
-                                    "New here? Register now",
-                                    style: TextStyle(
-                                        fontSize: regularfont*0.69,
-                                        fontWeight: FontWeight.w600,
-                                        color: Colors.grey[700]),
-                                  ),
-                                  onPressed: () {},
-                                ),
-                                Padding(padding:EdgeInsets.only(bottom:5),child:RaisedButton(
-                                    child: AnimatedContainer(
-                                        duration:
-                                            const Duration(microseconds: 500),
-                                        padding: EdgeInsets.all(15),
-                                        child: (isLoading)
-                                            ? CupertinoActivityIndicator()
-                                            : Text(
-                                                'SIGN IN',
-                                                style: TextStyle(
-                                                    fontSize: regularfont*0.9,
-                                                    color: Colors.white,
-                                                    fontWeight:
-                                                        FontWeight.w800),
-                                              )),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(30),
-                                          bottomLeft: Radius.circular(30)),
-                                    ),
-                                    color: Color(0xFFDE8602),
-                                    onPressed: () {
-                                      if (formKey.currentState.validate() &&
-                                          !isLoading) {
-                                        setState(() {
-                                          isLoading = true;
-                                        });
-                                        _attemptLogin(
-                                            emailController.text.trim(),
-                                            passwordController.text.trim());
-                                      }
-                                    })),
+                  padding: EdgeInsets.only(left: 25.0, right: 25.0),
+                  child: TextFormField(
+                    keyboardType: TextInputType.phone,
+                    
+                    decoration: InputDecoration(hintText: ' Enter your phone number',prefixText: '+91',prefixIcon: Icon(Icons.phone)),
+                    onChanged: (val) {
+                      setState(() {
+                        this.phoneNo = '+91'+val;
+                      });
+                    },
+                  )),
+                  codeSent ? Padding(
+                  padding: EdgeInsets.only(left: 25.0, right: 25.0),
+                  child: TextFormField(
+                    keyboardType: TextInputType.phone,
+                    decoration: InputDecoration(hintText: 'Enter OTP',prefixIcon: Icon(Icons.vpn_key)),
+                    onChanged: (val) {
+                      setState(() {
+                        this.smsCode = val;
+                      });
+                    },
+                  )) : Container(),
+              Padding(
+                  padding: EdgeInsets.only(left: 25.0, right: 25.0,top: 10),
+                  child: RaisedButton(
+                      child: Center(child: codeSent ? Text('Login',style: TextStyle(fontSize: 20),):Text('Verify',style: TextStyle(fontSize: 20),)),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0),),
+                      
+                      onPressed: () {
+                        AuthService().savePhoneNumber(this.phoneNo);
+                        codeSent ? AuthService().signInWithOTP(smsCode, verificationId):verifyPhone(phoneNo);
+                      }))
                               ],
                             ),
-                          ],
+                          
                         ),
                       ),
                     ),
-                  ),
+                  
                 ],
               )),
         ),
