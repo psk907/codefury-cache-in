@@ -133,45 +133,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-<<<<<<< HEAD
-    return FutureBuilder(
-      // Initialize FlutterFire:
-      future: _initialization,
-      builder: (context, snapshot) {
-        // Check for errors
-        if (snapshot.hasError) {
-          print("ERROR");
-        }
-
-        // Once complete, show your application
-        if (snapshot.connectionState == ConnectionState.done) {
-          return Scaffold(
-            bottomNavigationBar: BottomAppBar(
-                child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                IconButton(
-                  disabledColor: Colors.grey,
-                  focusColor: Colors.lightBlueAccent,
-                  icon: Icon(Icons.map_outlined),
-                  onPressed: () => _onItemTapped(0),
-                ),
-                IconButton(
-                    icon: Icon(Icons.home), onPressed: () => _onItemTapped(1)),
-                IconButton(
-                  icon: Icon(Icons.file_present),
-                  onPressed: () => _onItemTapped(2),
-                ),
-              ],
-            )),
-            body: _children[_selectedIndex],
-          );
-        }
-
-        // Otherwise, show something whilst waiting for initialization to complete
-        return Scaffold(body: Center(child: CupertinoActivityIndicator()));
-      },
-=======
     return Scaffold(
       bottomNavigationBar: BottomAppBar(
           child: Row(
@@ -189,7 +150,6 @@ class _MyHomePageState extends State<MyHomePage> {
         ],
       )),
       body: _children[_selectedIndex],
->>>>>>> 1e70d520440fc5d33345b179e50d9777e0e4e26f
     );
   }
 }
