@@ -1,6 +1,7 @@
 import 'package:codefury2020/tabs/hometab.dart';
 import 'package:codefury2020/tabs/maptab.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'configurations/app_localizations.dart';
@@ -38,18 +39,16 @@ class _MyAppState extends State<MyApp> {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       locale: _locale,
+      debugShowCheckedModeBanner: false,
 
-      // List all of the app's supported locales here
       supportedLocales: [
         Locale('en', 'US'),
-        Locale('sk', 'SK'),
         Locale('hi', 'IN'),
       ],
-      // These delegates make sure that the localization data for the proper language is loaded
+
       localizationsDelegates: [
-        // THIS CLASS WILL BE ADDED LATER
-        // A class which loads the translations from JSON files
         AppLocalizations.delegate,
+
         // Built-in localization of basic text for Material widgets
         GlobalMaterialLocalizations.delegate,
         // Built-in localization for text direction LTR/RTL
@@ -125,31 +124,28 @@ class _MyHomePageState extends State<MyHomePage> {
         // Once complete, show your application
         if (snapshot.connectionState == ConnectionState.done) {
           return Scaffold(
-            bottomNavigationBar: BottomNavigationBar(
-              items: const <BottomNavigationBarItem>[
-                BottomNavigationBarItem(
+            bottomNavigationBar: BottomAppBar(
+                child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                IconButton(
                   icon: Icon(Icons.map_outlined),
-                  label: 'Map',
+                  onPressed: () => _onItemTapped(0),
                 ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.home),
-                  label: 'Home',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.account_box),
-                  label: 'Applications',
+                IconButton(
+                    icon: Icon(Icons.home), onPressed: () => _onItemTapped(1)),
+                IconButton(
+                  icon: Icon(Icons.file_present),
+                  onPressed: () => _onItemTapped(2),
                 ),
               ],
-              currentIndex: _selectedIndex,
-              selectedItemColor: Colors.amber[800],
-              onTap: _onItemTapped,
-            ),
+            )),
             body: _children[_selectedIndex],
           );
         }
 
         // Otherwise, show something whilst waiting for initialization to complete
-        return CircularProgressIndicator();
+        return Scaffold(body: Center(child: CupertinoActivityIndicator()));
       },
     );
   }
