@@ -36,6 +36,7 @@ class _MyAppState extends State<MyApp> {
       title: 'CodeFury 2020 | Cache-in',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        fontFamily: 'Poppins',
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       locale: _locale,
