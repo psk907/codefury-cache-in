@@ -1,5 +1,6 @@
 import 'package:codefury2020/tabs/hometab.dart';
 import 'package:codefury2020/tabs/maptab.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'configurations/app_localizations.dart';
@@ -88,6 +89,9 @@ class _MyHomePageState extends State<MyHomePage> {
     HomeTab(),
     ProfileTab(),
   ];
+  
+  final Future<FirebaseApp> _initialization = Firebase.initializeApp();
+
 
   void _changeLanguage(Language language) {
     Locale _temp;
@@ -110,7 +114,18 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return FutureBuilder(
+      // Initialize FlutterFire:
+      future: _initialization,
+      builder: (context, snapshot) {
+        // Check for errors
+        if (snapshot.hasError) {
+          print("ERROR");
+        }
+
+        // Once complete, show your application
+        if (snapshot.connectionState == ConnectionState.done) {
+          return Scaffold(
       appBar: AppBar(
         title: Text(
           AppLocalizations.of(context).translate('welcome'),
@@ -151,6 +166,12 @@ class _MyHomePageState extends State<MyHomePage> {
         onTap: _onItemTapped,
       ),
       body: _children[_selectedIndex],
+    );
+        }
+
+        // Otherwise, show something whilst waiting for initialization to complete
+        return CircularProgressIndicator();
+      },
     );
   }
 }

@@ -1,4 +1,4 @@
-String map_configuration = '''[
+String mapConfiguration = '''[
   {
     "elementType": "geometry",
     "stylers": [
