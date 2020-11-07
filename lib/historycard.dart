@@ -116,7 +116,10 @@ class _HistoryCardState extends State<HistoryCard> {
                                 color: Colors.white,
                               ),
                             ),
-                            label: Text('Details'),
+                            label: Text(
+                              'Details',
+                              style: TextStyle(fontSize: smallfont * 0.75),
+                            ),
                           ),
                           Chip(
                             backgroundColor: Colors.green[100],
@@ -128,7 +131,10 @@ class _HistoryCardState extends State<HistoryCard> {
                                 color: Colors.white,
                               ),
                             ),
-                            label: Text('Contact'),
+                            label: Text(
+                              'Contact',
+                              style: TextStyle(fontSize: smallfont * 0.75),
+                            ),
                           ),
                           Chip(
                             backgroundColor: Colors.blue[200],
@@ -138,7 +144,10 @@ class _HistoryCardState extends State<HistoryCard> {
                                 size: smallfont,
                               ),
                             ),
-                            label: Text('Location'),
+                            label: Text(
+                              'Location',
+                              style: TextStyle(fontSize: smallfont * 0.75),
+                            ),
                           ),
                         ],
                       ),
