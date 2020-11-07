@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
 
 //rejected 0
 //accepted 1
@@ -18,11 +17,6 @@ class _HistoryCardState extends State<HistoryCard> {
     var size = MediaQuery.of(context).size;
     double mediumfont = size.height * 0.035;
     double smallfont = size.height * 0.02;
-
-    TextStyle headingStyle =
-        TextStyle(fontSize: mediumfont * 1.25, fontWeight: FontWeight.w600);
-    var hspacing = SizedBox(height: size.height * 0.02);
-    var wspacing = SizedBox(height: size.height * 0.05);
 
     var design = CircleAvatar(
       radius: mediumfont,
@@ -46,12 +40,15 @@ class _HistoryCardState extends State<HistoryCard> {
           message: messege,
           color: messegecol,
           child: Container(
-            decoration: BoxDecoration(borderRadius: BorderRadius.circular(30)),
             width: size.width,
             height: size.height * 0.17,
             child: Card(
+              elevation: 2,
+              shadowColor: Colors.grey[400],
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20)),
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(15, 15, 15, 0),
+                padding: const EdgeInsets.fromLTRB(10, 15, 10, 0),
                 child: Center(
                   child: Column(
                     children: [
@@ -90,9 +87,9 @@ class _HistoryCardState extends State<HistoryCard> {
                         spacing: 10,
                         children: [
                           Chip(
-                            backgroundColor: Colors.red[100],
+                            backgroundColor: Colors.amber[100],
                             avatar: CircleAvatar(
-                              backgroundColor: Colors.red[400],
+                              backgroundColor: Color(0xffffc45b),
                               child: Icon(
                                 Icons.format_align_justify,
                                 size: smallfont,
@@ -100,8 +97,13 @@ class _HistoryCardState extends State<HistoryCard> {
                               ),
                             ),
                             label: Text(
+<<<<<<< HEAD
                               AppLocalizations.of(context).translate('Details'),
                               style: TextStyle(fontSize: smallfont * 0.75),
+=======
+                              'Details',
+                              style: TextStyle(fontSize: smallfont * 0.72),
+>>>>>>> e4a88c531f8bc57d567877f75e32fd91ae2a3df0
                             ),
                           ),
                           Chip(
@@ -115,8 +117,13 @@ class _HistoryCardState extends State<HistoryCard> {
                               ),
                             ),
                             label: Text(
+<<<<<<< HEAD
                               AppLocalizations.of(context).translate('Contact'),
                               style: TextStyle(fontSize: smallfont * 0.75),
+=======
+                              'Contact',
+                              style: TextStyle(fontSize: smallfont * 0.72),
+>>>>>>> e4a88c531f8bc57d567877f75e32fd91ae2a3df0
                             ),
                           ),
                           Chip(
@@ -128,8 +135,13 @@ class _HistoryCardState extends State<HistoryCard> {
                               ),
                             ),
                             label: Text(
+<<<<<<< HEAD
                               AppLocalizations.of(context).translate('Location'),
                               style: TextStyle(fontSize: smallfont * 0.75),
+=======
+                              'Location',
+                              style: TextStyle(fontSize: smallfont * 0.72),
+>>>>>>> e4a88c531f8bc57d567877f75e32fd91ae2a3df0
                             ),
                           ),
                         ],
