@@ -39,5 +39,6 @@
     "Enter OTP": "OTP दर्ज कीजिये",
     "Login": "लॉग इन करें",
     "Verify": "सत्यापित करें",
-    "Enter the valid phone number": "मान्य फोन नंबर दर्ज करें"
+    "Enter the valid phone number": "मान्य फोन नंबर दर्ज करें",
+    "track_status":"अपने अनुप्रयोगों की स्थिति को ट्रैक करें"
 }

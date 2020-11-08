@@ -39,5 +39,6 @@
     "Enter the OTP": "Enter the OTP",
     "Login": "Login",
     "Verify": "Verify",
-    "Enter the valid phone number": "Enter the valid phone number"
+    "Enter the valid phone number": "Enter the valid phone number",
+    "track_status":"Track the status of your application"
 }
