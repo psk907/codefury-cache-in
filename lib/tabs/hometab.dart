@@ -107,6 +107,7 @@ class _HomeTabState extends State<HomeTab> {
                   decoration: InputDecoration(
                     contentPadding: EdgeInsets.symmetric(horizontal: 20),
                     hintText: AppLocalizations.of(context).translate('Search'),
+                    suffixIcon: Icon(Icons.search),
                     hintStyle: TextStyle(
                         color: Colors.grey, fontSize: mediumfont * 0.5),
                     filled: true,

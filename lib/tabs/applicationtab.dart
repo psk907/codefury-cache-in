@@ -98,15 +98,15 @@ class _ApplicationTabState extends State<ApplicationTab> {
                             ),
                             SizedBox(width: size.width * 0.04),
                             Text(
-                              "Mangalore",
-                              //TODO CHANGE LOCATION
+                              AppLocalizations.of(context).translate("track_status"),
+                              
                               style: TextStyle(
                                   color: Colors.black87,
-                                  fontSize: smallfont * 1.25),
+                                  fontSize: smallfont *0.85),
                             )
                           ],
                         ),
-                        FlatButton(
+                        /* FlatButton(
                           onPressed: () {
                             AuthService().signOut();
                             // Navigator.push(
@@ -119,7 +119,7 @@ class _ApplicationTabState extends State<ApplicationTab> {
                             style: TextStyle(
                                 fontSize: smallfont, color: Colors.grey[900]),
                           ),
-                        )
+                        ) */
                       ],
                     ),
                   ],
