@@ -25,6 +25,7 @@ class AuthService {
           }
         });
   }
+  
 
   //Sign out
   signOut() {

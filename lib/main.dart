@@ -42,9 +42,9 @@ class _MyAppState extends State<MyApp> {
           // Once complete, show your application
           if (snapshot.connectionState == ConnectionState.done) {
             return MaterialApp(
-              title: 'CodeFury 2020 | Cache-in',
+              title: 'Nowkri | Jobs for all',
               theme: ThemeData(
-                primarySwatch: Colors.blue,
+                primarySwatch: Colors.lightGreen,
                 fontFamily: 'Poppins',
                 visualDensity: VisualDensity.adaptivePlatformDensity,
               ),
