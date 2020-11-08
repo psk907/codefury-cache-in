@@ -121,7 +121,7 @@ class _HomeTabState extends State<HomeTab> {
               // wspacing,
               Spacer(),
               Align(
-                alignment: Alignment.centerLeft,
+                alignment: Alignment.centerRight,
                 child: FlatButton.icon(
                     onPressed: () {},
                     icon: Icon(
