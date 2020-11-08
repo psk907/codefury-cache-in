@@ -132,157 +132,140 @@ class _MyLoginPageState extends State<MyLoginPage> {
                 children: [
                   Align(
                     alignment: Alignment.topCenter,
-                    child: SingleChildScrollView(
-                      physics: ScrollPhysics(),
-                      child: CustomPaint(
-                        painter: MyPainter(size: size),
-                        size: size,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            SizedBox(
-                              height: size.height * 0.0825,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 25),
-                              child: Text(
-                                AppLocalizations.of(context)
-                                    .translate('Hey there,'),
+                    child: CustomPaint(
+                      painter: MyPainter(size: size),
+                      size: size,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          SizedBox(height: mediumfont * 5),
+                          Padding(
+                              padding: EdgeInsets.only(left: 25.0, right: 25.0),
+                              child: TextFormField(
                                 style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: headingfont,
-                                  fontWeight: FontWeight.w800,
-                                ),
-                                textAlign: TextAlign.start,
-                              ),
-                            ),
-                            SizedBox(
-                              height: size.height * 0.145,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 20, top: 0),
-                              child: Text(
-                                AppLocalizations.of(context)
-                                    .translate('Enter your credentials'),
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    fontSize: regularfont,
-                                    fontWeight: FontWeight.w600,
-                                    color: Colors.grey[700]),
-                              ),
-                            ),
-                            SizedBox(
-                              height: size.height * 0.04,
-                            ),
-                            Padding(
-                                padding:
-                                    EdgeInsets.only(left: 25.0, right: 25.0),
-                                child: TextFormField(
-                                  style: TextStyle(
-                                      color: Colors.grey[900],
-                                      fontSize: mediumfont * 0.6),
-                                  keyboardType: TextInputType.phone,
-                                  decoration: InputDecoration(
-                                      hintText: AppLocalizations.of(context)
-                                          .translate('Enter your phone number'),
-                                      hintStyle: TextStyle(
-                                          color: Colors.grey[400],
-                                          fontSize: mediumfont * 0.6),
-                                      prefixText: '+91 ',
-                                      prefixStyle: TextStyle(
-                                          color: Colors.grey[800],
-                                          fontSize: mediumfont * 0.6),
-                                      prefixIcon: Icon(Icons.phone)),
-                                  onChanged: (val) {
-                                    setState(() {
-                                      this.phoneNo = '+91' + val;
-                                    });
-                                  },
-                                )),
-                            codeSent
-                                ? Padding(
-                                    padding: EdgeInsets.only(
-                                        left: 25.0, right: 25.0, top: 10),
-                                    child: TextFormField(
-                                      style: TextStyle(
-                                          color: Colors.grey[900],
-                                          fontSize: mediumfont * 0.6),
-                                      keyboardType: TextInputType.phone,
-                                      decoration: InputDecoration(
-                                          hintText: AppLocalizations.of(context)
-                                              .translate('Enter the OTP'),
-                                          prefixIcon: Icon(Icons.vpn_key)),
-                                      onChanged: (val) {
+                                    color: Colors.grey[900],
+                                    fontSize: mediumfont * 0.6),
+                                keyboardType: TextInputType.phone,
+                                decoration: InputDecoration(
+                                    hintText: AppLocalizations.of(context)
+                                        .translate('Enter your phone number'),
+                                    hintStyle: TextStyle(
+                                        color: Colors.grey[400],
+                                        fontSize: mediumfont * 0.6),
+                                    prefixText: '+91 ',
+                                    prefixStyle: TextStyle(
+                                        color: Colors.grey[800],
+                                        fontSize: mediumfont * 0.6),
+                                    prefixIcon: Icon(Icons.phone)),
+                                onChanged: (val) {
+                                  setState(() {
+                                    this.phoneNo = '+91' + val;
+                                  });
+                                },
+                              )),
+                          codeSent
+                              ? Padding(
+                                  padding: EdgeInsets.only(
+                                      left: 25.0, right: 25.0, top: 10),
+                                  child: TextFormField(
+                                    style: TextStyle(
+                                        color: Colors.grey[900],
+                                        fontSize: mediumfont * 0.6),
+                                    keyboardType: TextInputType.phone,
+                                    decoration: InputDecoration(
+                                        hintText: AppLocalizations.of(context)
+                                            .translate('Enter the OTP'),
+                                        prefixIcon: Icon(Icons.vpn_key)),
+                                    onChanged: (val) {
+                                      setState(() {
+                                        this.smsCode = val;
+                                      });
+                                    },
+                                  ))
+                              : Container(),
+                          Padding(
+                            padding: EdgeInsets.only(
+                                left: 25.0, right: 25.0, top: 40),
+                            child: Container(
+                                height: size.height * 0.06,
+                                child: RaisedButton(
+                                    child: Center(
+                                        child: loading
+                                            ? CupertinoActivityIndicator()
+                                            : codeSent
+                                                ? Text(
+                                                    AppLocalizations.of(context)
+                                                        .translate('Login'),
+                                                    style:
+                                                        TextStyle(fontSize: 20),
+                                                  )
+                                                : Text(
+                                                    AppLocalizations.of(context)
+                                                        .translate('Verify'),
+                                                    style:
+                                                        TextStyle(fontSize: 20),
+                                                  )),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(12.0),
+                                    ),
+                                    onPressed: () {
+                                      if (!loading &&
+                                          this.phoneNo != null &&
+                                          this.phoneNo.contains(new RegExp(
+                                              r'^(\+91[\-\s]?)?[0]?(91)?[789]\d{9}$'))) {
                                         setState(() {
-                                          this.smsCode = val;
+                                          loading = true;
                                         });
-                                      },
-                                    ))
-                                : Container(),
-                            Padding(
-                              padding: EdgeInsets.only(
-                                  left: 25.0, right: 25.0, top: 40),
-                              child: Container(
-                                  height: size.height * 0.06,
-                                  child: RaisedButton(
-                                      child: Center(
-                                          child: loading
-                                              ? CupertinoActivityIndicator()
-                                              : codeSent
-                                                  ? Text(
-                                                      AppLocalizations.of(
-                                                              context)
-                                                          .translate('Login'),
-                                                      style: TextStyle(
-                                                          fontSize: 20),
-                                                    )
-                                                  : Text(
-                                                      AppLocalizations.of(
-                                                              context)
-                                                          .translate('Verify'),
-                                                      style: TextStyle(
-                                                          fontSize: 20),
-                                                    )),
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(12.0),
-                                      ),
-                                      onPressed: () {
-                                        if (!loading &&
-                                            this.phoneNo != null &&
-                                            this.phoneNo.contains(new RegExp(
-                                                r'^(\+91[\-\s]?)?[0]?(91)?[789]\d{9}$'))) {
-                                          setState(() {
-                                            loading = true;
-                                          });
-                                          AuthService()
-                                              .savePhoneNumber(this.phoneNo);
-                                          if (codeSent) {
-                                            if (smsCode != null)
-                                              AuthService().signInWithOTP(
-                                                  smsCode,
-                                                  verificationId,
-                                                  this.phoneNo);
-                                            else
-                                              showtoast(AppLocalizations.of(
-                                                      context)
-                                                  .translate('Enter the OTP'));
-                                          } else
-                                            verifyPhone(phoneNo);
+                                        AuthService()
+                                            .savePhoneNumber(this.phoneNo);
+                                        if (codeSent) {
+                                          if (smsCode != null)
+                                            AuthService().signInWithOTP(smsCode,
+                                                verificationId, this.phoneNo);
+                                          else
+                                            showtoast(AppLocalizations.of(
+                                                    context)
+                                                .translate('Enter the OTP'));
                                         } else
-                                          showtoast(AppLocalizations.of(context)
-                                              .translate(
-                                                  'Enter the valid phone number'));
-                                      })),
-                            )
-                          ],
-                        ),
+                                          verifyPhone(phoneNo);
+                                      } else
+                                        showtoast(AppLocalizations.of(context)
+                                            .translate(
+                                                'Enter the valid phone number'));
+                                    })),
+                          )
+                        ],
                       ),
                     ),
                   ),
                   Align(
-                    alignment: Alignment(0.4, 0.97),
+                    alignment: Alignment(-0.6, -0.8),
+                    child: Text(
+                      AppLocalizations.of(context).translate('Hey there,'),
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: headingfont,
+                        fontWeight: FontWeight.w800,
+                      ),
+                      textAlign: TextAlign.start,
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment(-0.6, -0.1),
+                    child: Text(
+                      AppLocalizations.of(context)
+                          .translate('Enter your credentials'),
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          fontSize: regularfont,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.grey[700]),
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment(0.35, 0.97),
                     child: Image.asset(
                       'images/flogo.png',
                       height: mediumfont * 3,
@@ -291,10 +274,10 @@ class _MyLoginPageState extends State<MyLoginPage> {
                   Align(
                     alignment: Alignment(-0.2, 0.92),
                     child: Text(
-                      "Now-kri",
+                      "Nowkri",
                       style: TextStyle(
                           color: Colors.grey[700],
-                          fontSize: mediumfont,
+                          fontSize: mediumfont * 0.95,
                           fontWeight: FontWeight.w500),
                     ),
                   ),
