@@ -5,6 +5,7 @@ import 'package:codefury2020/models/job.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter/material.dart';
 import '../services/location_service.dart';
+import 'jobView.dart';
 
 class PlacesSearchMap extends StatefulWidget {
   PlacesSearchMap({Key key}) : super(key: key);
@@ -56,9 +57,13 @@ class _PlacesSearchMapState extends State<PlacesSearchMap> {
         markerId: MarkerId(job.uid),
         position: LatLng(job.location.latitude, job.location.longitude),
         infoWindow: InfoWindow(
-            title: job.title,
-            snippet: job.salary.toString(),
-            onTap: () => print("hey")),
+            title: job.companyName,
+            snippet: "Looking for a "+job.title,
+            onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => JobViewPage(job: job),
+                ))),
       ));
     });
   }

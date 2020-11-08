@@ -204,7 +204,7 @@ class _JobModelState extends State<JobViewPage> {
                     Container(
                       height: size.height * 0.65,
                       child: SingleChildScrollView(
-                        physics: ClampingScrollPhysics(),
+                        physics: BouncingScrollPhysics(),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
