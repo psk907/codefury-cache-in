@@ -98,11 +98,11 @@ class _ApplicationTabState extends State<ApplicationTab> {
                             ),
                             SizedBox(width: size.width * 0.04),
                             Text(
-                              AppLocalizations.of(context).translate("track_status"),
-                              
+                              AppLocalizations.of(context)
+                                  .translate("track_status"),
                               style: TextStyle(
                                   color: Colors.black87,
-                                  fontSize: smallfont *0.85),
+                                  fontSize: smallfont * 0.85),
                             )
                           ],
                         ),
@@ -134,21 +134,23 @@ class _ApplicationTabState extends State<ApplicationTab> {
                         .doc(phoneNumber)
                         .collection('applications')
                         .snapshots(),
-                    builder: ( context, snapshot) {
-                      if(snapshot.hasData){
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
                         var data = snapshot.data.docs;
                         return ListView.builder(
                           physics: BouncingScrollPhysics(),
                           itemCount: data.length,
                           itemBuilder: (BuildContext context, int index) {
-                          return HistoryCard(case_no: 0,jobApplication: JobApplication.fromJson(data[index].data()),);
-                         },
+                            return HistoryCard(
+                              case_no: 1,
+                              jobApplication:
+                                  JobApplication.fromJson(data[index].data()),
+                            );
+                          },
                         );
-                      }
-                      else
-                      return Center(child:CupertinoActivityIndicator());
+                      } else
+                        return Center(child: CupertinoActivityIndicator());
                     },
-                    
                   ),
                 ),
               ),
