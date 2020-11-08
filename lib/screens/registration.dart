@@ -84,6 +84,7 @@ class _RegistrationPageState extends State<Registration> {
 
   onPressRegister() {
     if (!_formKey.currentState.validate()) {
+      showtoast("Fill in the required fields !",Colors.red);
     } else {
       setState(() {
         this.isLoading = true;
@@ -102,6 +103,8 @@ class _RegistrationPageState extends State<Registration> {
        _slotpreferencescontroller?.text ?? "none",
         _biocontroller?.text ?? "none",
       );
+      Navigator.pop(context);
+      showtoast("SAVED ! Tap on APPLY to proceed !",Colors.red);
     }
   }
 
@@ -232,7 +235,7 @@ class _RegistrationPageState extends State<Registration> {
     );
   }
 
-  showtoast(String text) => _scaffoldKey.currentState.showSnackBar(
+  showtoast(String text,Color color) => _scaffoldKey.currentState.showSnackBar(
         SnackBar(
           content: Text(text),
           elevation: 5,
@@ -241,7 +244,7 @@ class _RegistrationPageState extends State<Registration> {
               Radius.circular(30),
             ),
           ),
-          backgroundColor: Colors.red,
+          backgroundColor:color,
           behavior: SnackBarBehavior.floating,
         ),
       );
@@ -259,6 +262,7 @@ class _RegistrationPageState extends State<Registration> {
     var wspacing = SizedBox(height: size.height * 0.02);
     return SafeArea(
       child: Scaffold(
+        key: _scaffoldKey,
         backgroundColor: Colors.white,
         body: Stack(children: [
           Container(
@@ -332,8 +336,7 @@ class _RegistrationPageState extends State<Registration> {
         floatingActionButton: FloatingActionButton.extended(
           onPressed: () {
             onPressRegister();
-            Navigator.pushReplacement(context,
-                new MaterialPageRoute(builder: (context) => MyHomePage()));
+            
           },
           icon: Icon(Icons.navigate_next),
           label: Text("Submit"),
