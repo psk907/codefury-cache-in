@@ -269,11 +269,7 @@ class _MyLoginPageState extends State<MyLoginPage> {
                                                   .translate('Enter the OTP'));
                                           } else
                                             verifyPhone(phoneNo);
-                                          /* Navigator.push(
-                                                context,
-                                                new MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        Registration())); */
+                               
                                         } else
                                           showtoast(AppLocalizations.of(context)
                                               .translate(

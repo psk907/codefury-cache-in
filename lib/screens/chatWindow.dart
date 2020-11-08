@@ -101,7 +101,7 @@ class _MyChatPageState extends State<MyChatPage> {
                   });
                 },
                 messageContainerDecoration: BoxDecoration(
-                    color: Colors.blue,
+                    color: Color(0xffffc45b),
                     borderRadius: new BorderRadius.only(
                       topLeft: const Radius.circular(15.0),
                       topRight: const Radius.circular(15.0),
