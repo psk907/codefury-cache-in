@@ -188,7 +188,7 @@ class _JobModelState extends State<JobViewPage> {
                                   AppLocalizations.of(context).translate('Need') +
                                       " : " +
                                       widget.job.title,
-                                  style: TextStyle(fontSize: mediumfont * 0.7),
+                                  style: TextStyle(fontSize: mediumfont * 0.6),
                                 )
                               ],
                             ),
@@ -297,26 +297,48 @@ class _JobModelState extends State<JobViewPage> {
                   ],
                 ),
               ),
-              Align(
-                alignment: Alignment(-1, -0.9),
-                child: IconButton(
-                    icon: Icon(Icons.chevron_left),
-                    iconSize: mediumfont * 1.5,
-                    onPressed: () {
-                      Navigator.pop(context);
-                    }),
-              ),
-              Align(
-                alignment: Alignment(1, -0.9),
-                child: IconButton(
-                    icon: Icon(Icons.send_and_archive),
-                    iconSize: mediumfont * 1.25,
+              
+            Align(
+              alignment: Alignment(-1, -0.9075),
+              child: IconButton(
+                  icon: Icon(Icons.chevron_left),
+                  iconSize: mediumfont * 1.5,
+                  onPressed: () {
+                    Navigator.pop(context);
+                  }),
+            ),
+            Align(
+              alignment: Alignment(0.94, -0.89),
+              child: Container(
+                height: size.height * 0.045,
+                width: size.width * 0.34,
+                child: RaisedButton(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10)),
+                    color: Colors.green[300],
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          "APPLY",
+                          style: TextStyle(
+                              fontSize: mediumfont * 0.9,
+                              fontWeight: FontWeight.w600),
+                        ),
+                        Icon(
+                          Icons.send_and_archive,
+                          size: mediumfont * 0.8,
+                        ),
+                      ],
+                    ),
                     onPressed: () {
                       submitApplication();
                     }),
               ),
-            ],
-          )),
-    );
+            ),]
+            ),
+          
+        ));
   }
 }
