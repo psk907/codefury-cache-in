@@ -121,6 +121,7 @@ class _MyLoginPageState extends State<MyLoginPage> {
 
     return SafeArea(
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         key: _scaffoldKey,
         body: Form(
           key: formKey,
@@ -269,7 +270,6 @@ class _MyLoginPageState extends State<MyLoginPage> {
                                                   .translate('Enter the OTP'));
                                           } else
                                             verifyPhone(phoneNo);
-                               
                                         } else
                                           showtoast(AppLocalizations.of(context)
                                               .translate(
@@ -279,6 +279,23 @@ class _MyLoginPageState extends State<MyLoginPage> {
                           ],
                         ),
                       ),
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment(0.4, 0.97),
+                    child: Image.asset(
+                      'images/flogo.png',
+                      height: mediumfont * 3,
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment(-0.2, 0.92),
+                    child: Text(
+                      "Now-kri",
+                      style: TextStyle(
+                          color: Colors.grey[700],
+                          fontSize: mediumfont,
+                          fontWeight: FontWeight.w500),
                     ),
                   ),
                   Align(
@@ -296,18 +313,6 @@ class _MyLoginPageState extends State<MyLoginPage> {
                       onChanged: (language) {
                         _changeLanguage(language);
                       },
-                    ),
-                  ),
-                  Align(
-                    alignment: Alignment(-0.1, 0.9),
-                    child: Image.asset('images/logo.png'),
-                  ),
-                  Align(
-                    alignment: Alignment(0.1, 0.9),
-                    child: Text(
-                      "Now-kri",
-                      style: TextStyle(
-                          fontSize: mediumfont, fontWeight: FontWeight.w600),
                     ),
                   ),
                 ],
