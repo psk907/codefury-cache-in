@@ -120,6 +120,21 @@ class _HomeTabState extends State<HomeTab> {
               ),
               // wspacing,
               Spacer(),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: FlatButton.icon(
+                    onPressed: () {},
+                    icon: Icon(
+                      Icons.filter_list_alt,
+                      color: Colors.grey[800],
+                      size: mediumfont * 0.7,
+                    ),
+                    label: Text(
+                      'Filter by',
+                      style: TextStyle(
+                          color: Colors.grey[800], fontSize: mediumfont * 0.8),
+                    )),
+              ),
               StreamBuilder<QuerySnapshot>(
                 stream: FirebaseFirestore.instance
                     .collection('employers')
