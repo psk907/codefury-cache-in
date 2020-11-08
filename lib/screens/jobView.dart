@@ -263,14 +263,35 @@ class _JobModelState extends State<JobViewPage> {
               }),
         ),
         Align(
-          alignment: Alignment(1, -0.9),
-          child: IconButton(
-              icon: Icon(Icons.send_and_archive),
-              iconSize: mediumfont * 1.25,
-              onPressed: () {
-                submitApplication();
-                Navigator.pop(context);
-              }),
+          alignment: Alignment(0.94, -0.89),
+          child: Container(
+            height: size.height * 0.045,
+            width: size.width * 0.34,
+            child: RaisedButton(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10)),
+                color: Colors.green[300],
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      "APPLY",
+                      style: TextStyle(
+                          fontSize: mediumfont * 0.9,
+                          fontWeight: FontWeight.w600),
+                    ),
+                    Icon(
+                      Icons.send_and_archive,
+                      size: mediumfont * 0.8,
+                    ),
+                  ],
+                ),
+                onPressed: () {
+                  submitApplication();
+                  Navigator.pop(context);
+                }),
+          ),
         ),
       ],
     ));

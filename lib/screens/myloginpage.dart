@@ -44,9 +44,8 @@ class _MyLoginPageState extends State<MyLoginPage> {
   Future<void> verifyPhone(phoneNo) async {
     final PhoneVerificationCompleted verified = (AuthCredential authResult) {
       AuthService().signIn(authResult, phoneNo);
-      Navigator.pushReplacement(context, MaterialPageRoute(
-      builder: (context) => Registration()
-  ));
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => Registration()));
     };
 
     final PhoneVerificationFailed verificationfailed =
@@ -94,8 +93,6 @@ class _MyLoginPageState extends State<MyLoginPage> {
     }
     MyApp.setLocale(context, _temp);
   }
-
-
 
   showtoast(String text) => _scaffoldKey.currentState.showSnackBar(
         SnackBar(
@@ -303,6 +300,18 @@ class _MyLoginPageState extends State<MyLoginPage> {
                       onChanged: (language) {
                         _changeLanguage(language);
                       },
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment(-0.1, 0.9),
+                    child: Image.asset('images/logo.png'),
+                  ),
+                  Align(
+                    alignment: Alignment(0.1, 0.9),
+                    child: Text(
+                      "Now-kri",
+                      style: TextStyle(
+                          fontSize: mediumfont, fontWeight: FontWeight.w600),
                     ),
                   ),
                 ],
