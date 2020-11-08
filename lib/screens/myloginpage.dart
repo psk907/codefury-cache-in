@@ -215,9 +215,11 @@ class _MyLoginPageState extends State<MyLoginPage> {
                                           this.phoneNo != null &&
                                           this.phoneNo.contains(new RegExp(
                                               r'^(\+91[\-\s]?)?[0]?(91)?[789]\d{9}$'))) {
+
                                         setState(() {
                                           loading = true;
                                         });
+
                                         AuthService()
                                             .savePhoneNumber(this.phoneNo);
                                         if (codeSent) {
@@ -248,6 +250,7 @@ class _MyLoginPageState extends State<MyLoginPage> {
                         color: Colors.white,
                         fontSize: headingfont,
                         fontWeight: FontWeight.w800,
+
                       ),
                       textAlign: TextAlign.start,
                     ),
