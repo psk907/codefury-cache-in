@@ -1,7 +1,14 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:codefury2020/configurations/app_localizations.dart';
 import 'package:codefury2020/models/job.dart';
 import 'package:flutter/material.dart';
+import 'package:geocoder/geocoder.dart';
+import 'package:geocoder/model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+import 'registration.dart';
 
 class JobViewPage extends StatefulWidget {
   Job job;
@@ -11,6 +18,92 @@ class JobViewPage extends StatefulWidget {
 }
 
 class _JobModelState extends State<JobViewPage> {
+  Address storeaddress = new Address();
+  @override
+  void initState() {
+    super.initState();
+    _getAddress([widget.job.location.latitude, widget.job.location.longitude]);
+  }
+
+  _getAddress(List<dynamic> coordinates) async {
+    var addresses = await Geocoder.local.findAddressesFromCoordinates(
+        Coordinates(coordinates[0], coordinates[1]));
+    var firstresult = addresses.first;
+    setState(() {
+      storeaddress = firstresult;
+    });
+  }
+
+  _launchURL(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
+  void showSnackbar(String text) {
+    _scaffoldKey.currentState.showSnackBar(
+      SnackBar(
+        content: Text(text),
+      ),
+    );
+  }
+
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  showtoast(String text, Color color) => _scaffoldKey.currentState.showSnackBar(
+        SnackBar(
+          content: Text(text),
+          elevation: 5,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(30),
+            ),
+          ),
+          backgroundColor: color,
+          behavior: SnackBarBehavior.floating,
+        ),
+      );
+
+  userExists() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String name = prefs.getString("name");
+    return name;
+  }
+
+  void submitApplication() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    if (prefs.getString("name") != null) {
+      Map<String, dynamic> data = {
+        "title": widget.job.title,
+        "uid": widget.job.uid,
+        "description": widget.job.description,
+        "job-span": widget.job.duration,
+        "salary": widget.job.salary,
+        "location": widget.job.location,
+        "skills-appreciated": widget.job.reqdSkills,
+        "company-name": widget.job.companyName,
+        "daily-hours": widget.job.dailyHours,
+        "employer-name": widget.job.employerName,
+        "applicant-name": prefs.getString('name'),
+        "applicant-skills": prefs.getString('description'),
+        "applicant-dob":
+            Timestamp.fromDate(DateTime.parse(prefs.getString('dob'))),
+        "applicant-bio": prefs.getString('bio'),
+      };
+      FirebaseFirestore.instance
+          .collection('users')
+          .doc(prefs.getString('Phone Number'))
+          .collection('applications')
+          .add(data);
+      showtoast("Application Submitted", Colors.green);
+      Navigator.pop(context);
+    } else {
+      Navigator.push(
+          context, new MaterialPageRoute(builder: (context) => Registration()));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -26,151 +119,226 @@ class _JobModelState extends State<JobViewPage> {
       thickness: 1,
     );
 
-    return Scaffold(
-        body: Stack(
-      children: [
-        Padding(
-          padding: EdgeInsets.fromLTRB(30, mediumfont * 3.4, 20, 0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+    return Hero(
+      tag: widget.job.uid,
+          child: Scaffold(
+          key: _scaffoldKey,
+          body: Stack(
             children: [
-              Row(
-                children: [
-                  Column(
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(30),
-                        child: Image.asset(
-                          'images/demoprof.png',
-                          width: size.width * 0.28,
-                        ),
-                      ),
-                      wspacing
-                    ],
-                  ),
-                  Spacer(),
-                  Container(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        AutoSizeText(
-                          widget.job.companyName,
-                          maxLines: 1,
-                          style: TextStyle(
-                              fontSize: mediumfont * 0.9,
-                              fontWeight: FontWeight.w400),
-                        ),
-                        Text(
-                          widget.job.employerName,
-                          style: TextStyle(
-                              color: Colors.grey[700],
-                              fontSize: smallfont,
-                              fontWeight: FontWeight.w400),
-                        ),
-                        FlatButton.icon(
-                            label: Text(AppLocalizations.of(context)
-                                .translate('Place')),
-                            icon: Icon(Icons.location_on),
-                            onPressed: () {}),
-                        hspacing,
-                        Text(
-                          AppLocalizations.of(context).translate('Need') +
-                              " : " +
-                              widget.job.title,
-                          style: TextStyle(fontSize: mediumfont * 0.7),
-                        )
-                      ],
-                    ),
-                  ),
-                  Spacer()
-                ],
+              Container(
+                color: Colors.amber[100],
+                height: size.height * 0.3,
               ),
-              Divider(
-                  color: Colors.grey[800],
-                  thickness: 1.5,
-                  height: size.height * 0.06),
-              SingleChildScrollView(
-                physics: ClampingScrollPhysics(),
+              Padding(
+                padding: EdgeInsets.fromLTRB(30, mediumfont * 3.4, 20, 0),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(AppLocalizations.of(context).translate('About'),
-                        style: headingStyle),
-                    hspacing,
                     Container(
-                      child: Text(
-                        widget.job.description,
-                        style: TextStyle(fontSize: smallfont * 0.9),
+                      // color: Colors.amber[50],
+                      child: Row(
+                        children: [
+                          Column(
+                            children: [
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(30),
+                                child: Image.asset(
+                                  'images/job-icon.png',
+                                  width: size.width * 0.25,
+                                ),
+                              ),
+                              wspacing
+                            ],
+                          ),
+                          Spacer(),
+                          Container(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                  child: AutoSizeText(
+                                    // 'frfrnenenek rjfherfj bjrfbhejr fjrhf',
+                                    widget.job.companyName,
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 2,
+                                    minFontSize: 20,
+                                    // maxFontSize: mediumfont * 0.95,
+
+                                    style: TextStyle(
+                                        // fontSize: mediumfont * 0.95,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                ),
+                                Text(
+                                  widget.job.employerName,
+                                  style: TextStyle(
+                                      color: Colors.grey[700],
+                                      fontSize: smallfont,
+                                      fontWeight: FontWeight.w400),
+                                ),
+                                FlatButton.icon(
+                                  label: Text(AppLocalizations.of(context)
+                                      .translate('Place')),
+                                  icon: Icon(Icons.location_on),
+                                  onPressed: () => _launchURL(
+                                      'https://www.google.com/maps/search/?api=1&query=${widget.job.location.latitude},${widget.job.location.longitude}'),
+                                ),
+                                hspacing,
+                                Text(
+                                  AppLocalizations.of(context).translate('Need') +
+                                      " : " +
+                                      widget.job.title,
+                                  style: TextStyle(fontSize: mediumfont * 0.6),
+                                )
+                              ],
+                            ),
+                          ),
+                          Spacer()
+                        ],
                       ),
                     ),
-                    wspacing,
-                    Text(
-                        AppLocalizations.of(context)
-                            .translate('Skills required'),
-                        style: headingStyle),
-                    hspacing,
-                    Wrap(
-                      spacing: 10,
-                      children: widget.job.reqdSkills
-                          .map((skill) => Chip(
-                                  label: Text(
-                                skill.toString(),
-                              )))
-                          .toList(),
-                    ),
-                    wspacing,
-                    Text(AppLocalizations.of(context).translate('Wages/Salary'),
-                        style: headingStyle),
-                    hspacing,
-                    Text(
-                      " Rs.${widget.job.salary}",
-                      style: TextStyle(
-                        fontSize: smallfont,
+                    Divider(
+                        color: Colors.grey[800],
+                        thickness: 1.5,
+                        height: size.height * 0.06),
+                    Container(
+                      height: size.height * 0.65,
+                      child: SingleChildScrollView(
+                        physics: BouncingScrollPhysics(),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(AppLocalizations.of(context).translate('About'),
+                                style: headingStyle),
+                            hspacing,
+                            Container(
+                              child: Text(
+                                widget.job.description,
+                                style: TextStyle(fontSize: smallfont * 0.9),
+                              ),
+                            ),
+                            wspacing,
+                            Text(
+                                AppLocalizations.of(context)
+                                    .translate('Skills required'),
+                                style: headingStyle),
+                            hspacing,
+                            Wrap(
+                              spacing: 10,
+                              children: widget.job.reqdSkills
+                                  .map((skill) => Chip(
+                                          label: Text(
+                                        skill.toString(),
+                                      )))
+                                  .toList(),
+                            ),
+                            wspacing,
+                            Text(
+                                AppLocalizations.of(context)
+                                    .translate('Wages/Salary'),
+                                style: headingStyle),
+                            hspacing,
+                            Text(
+                              " Rs.${widget.job.salary}",
+                              style: TextStyle(
+                                fontSize: smallfont,
+                              ),
+                            ),
+                            wspacing,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                    AppLocalizations.of(context)
+                                        .translate('Photos'),
+                                    style: headingStyle),
+                                GestureDetector(
+                                    onTap: () {},
+                                    child: Text(AppLocalizations.of(context)
+                                        .translate('See all')))
+                              ],
+                            ),
+                            hspacing,
+                            Text(AppLocalizations.of(context)
+                                .translate('all photos come here in a Carousel')),
+                            wspacing,
+                            Text(
+                                // AppLocalizations.of(context.translate(
+                                'Contract Term',
+                                style: headingStyle),
+                            hspacing,
+                            Text(
+                              widget.job.duration +
+                                  " " +
+                                  AppLocalizations.of(context)
+                                      .translate('months'),
+                              style: TextStyle(
+                                fontSize: smallfont,
+                              ),
+                            ),
+                            wspacing,
+                            Text(
+                                // AppLocalizations.of(context.translate(
+                                'Daily Hours',
+                                style: headingStyle),
+                            hspacing,
+                            Text(
+                              widget.job.dailyHours.toString() + " hours",
+                              style: TextStyle(
+                                fontSize: smallfont,
+                              ),
+                            ),
+                            wspacing,
+                          ],
+                        ),
                       ),
                     ),
-                    wspacing,
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(AppLocalizations.of(context).translate('Photos'),
-                            style: headingStyle),
-                        GestureDetector(
-                            onTap: () {},
-                            child: Text(AppLocalizations.of(context)
-                                .translate('See all')))
-                      ],
-                    ),
-                    hspacing,
-                    Text(AppLocalizations.of(context)
-                        .translate('all photos come here in a Carousel')),
-                    wspacing,
                   ],
                 ),
               ),
-            ],
-          ),
-        ),
-        Align(
-          alignment: Alignment(-1, -0.9),
-          child: IconButton(
-              icon: Icon(Icons.chevron_left),
-              iconSize: mediumfont * 1.5,
-              onPressed: () {
-                Navigator.pop(context);
-              }),
-        ),
-        
-        Align(
-          alignment: Alignment(1, -0.9),
-          child: IconButton(
-              icon: Icon(Icons.send_and_archive),
-              iconSize: mediumfont * 1.25,
-              onPressed: () {
-                Navigator.pop(context);
-              }),
-        ),
-      ],
-    ));
+              
+            Align(
+              alignment: Alignment(-1, -0.9075),
+              child: IconButton(
+                  icon: Icon(Icons.chevron_left),
+                  iconSize: mediumfont * 1.5,
+                  onPressed: () {
+                    Navigator.pop(context);
+                  }),
+            ),
+            Align(
+              alignment: Alignment(0.94, -0.89),
+              child: Container(
+                height: size.height * 0.045,
+                width: size.width * 0.34,
+                child: RaisedButton(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10)),
+                    color: Colors.green[300],
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          "APPLY",
+                          style: TextStyle(
+                              fontSize: mediumfont * 0.9,
+                              fontWeight: FontWeight.w600),
+                        ),
+                        Icon(
+                          Icons.send_and_archive,
+                          size: mediumfont * 0.8,
+                        ),
+                      ],
+                    ),
+                    onPressed: () {
+                      submitApplication();
+                    }),
+              ),
+            ),]
+            ),
+          
+        ));
   }
 }

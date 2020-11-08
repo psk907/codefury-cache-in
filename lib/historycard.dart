@@ -1,3 +1,5 @@
+import 'package:codefury2020/models/application.dart';
+import 'package:codefury2020/screens/chatWindow.dart';
 import 'package:flutter/material.dart';
 
 import 'configurations/app_localizations.dart';
@@ -8,7 +10,8 @@ import 'configurations/app_localizations.dart';
 
 class HistoryCard extends StatefulWidget {
   final int case_no;
-  HistoryCard(this.case_no);
+  final JobApplication jobApplication;
+  HistoryCard({this.case_no, this.jobApplication});
   @override
   _HistoryCardState createState() => _HistoryCardState();
 }
@@ -66,18 +69,18 @@ class _HistoryCardState extends State<HistoryCard> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      AppLocalizations.of(context).translate('Company Name'),
+                                      widget.jobApplication.companyName,
                                       style: TextStyle(
                                           fontSize: mediumfont * 0.7,
                                           fontWeight: FontWeight.w400),
                                     ),
                                     Text(
-                                      AppLocalizations.of(context).translate('Employer Name'),
+                                      widget.jobApplication.title,
                                       style: TextStyle(
                                           color: Colors.grey[700],
                                           fontSize: smallfont * 0.8,
                                           fontWeight: FontWeight.w400),
-                                    )
+                                    ),
                                   ],
                                 ))
                               ]),
@@ -103,19 +106,31 @@ class _HistoryCardState extends State<HistoryCard> {
                               style: TextStyle(fontSize: smallfont * 0.75),
                             ),
                           ),
-                          Chip(
-                            backgroundColor: Colors.green[100],
-                            avatar: CircleAvatar(
-                              backgroundColor: Colors.green[600],
-                              child: Icon(
-                                Icons.phone,
-                                size: smallfont,
-                                color: Colors.white,
+                          InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  new MaterialPageRoute(
+                                      builder: (context) => MyChatPage(
+                                            jobApplication:
+                                                widget.jobApplication,
+                                          )));
+                            },
+                            child: Chip(
+                              backgroundColor: Colors.green[100],
+                              avatar: CircleAvatar(
+                                backgroundColor: Colors.green[600],
+                                child: Icon(
+                                  Icons.phone,
+                                  size: smallfont,
+                                  color: Colors.white,
+                                ),
                               ),
-                            ),
-                            label: Text(
-                              AppLocalizations.of(context).translate('Contact'),
-                              style: TextStyle(fontSize: smallfont * 0.75),
+                              label: Text(
+                                AppLocalizations.of(context)
+                                    .translate('Contact'),
+                                style: TextStyle(fontSize: smallfont * 0.75),
+                              ),
                             ),
                           ),
                           Chip(
@@ -127,7 +142,8 @@ class _HistoryCardState extends State<HistoryCard> {
                               ),
                             ),
                             label: Text(
-                              AppLocalizations.of(context).translate('Location'),
+                              AppLocalizations.of(context)
+                                  .translate('Location'),
                               style: TextStyle(fontSize: smallfont * 0.75),
                             ),
                           ),

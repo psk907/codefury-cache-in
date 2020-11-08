@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class application{
+class JobApplication{
   String title,description,uid,duration,companyName,employerName,applicantName;
   int dailyHours;
   int salary;
@@ -8,12 +8,12 @@ class application{
   List<dynamic> reqdSkills;
 
 
-  application({
+  JobApplication({
     this.title,this.description,this.duration,this.location,this.salary,this.uid,this.reqdSkills,this.companyName,this.dailyHours,this.employerName,this.applicantName
   });
 
-  factory application.fromJson(Map<String,dynamic> json){
-    return application(
+  factory JobApplication.fromJson(Map<String,dynamic> json){
+    return JobApplication(
       title: json['title']??"job title",
       uid: json['uid'],
       description: json['description']??"",

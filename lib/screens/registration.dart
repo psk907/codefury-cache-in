@@ -1,3 +1,4 @@
+import 'package:codefury2020/models/language.dart';
 import 'package:codefury2020/services/authservice.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -27,8 +28,8 @@ class _RegistrationPageState extends State<Registration> {
   TextEditingController _namecontroller,
       _skillscontroller,
       _jobpostscontroller,
-      _moredetailscontroller,
-      _submissionlinkcontroller;
+      _biocontroller,
+     _slotpreferencescontroller;
   final _formKey = GlobalKey<FormState>();
 
   DateTime pickeddate;
@@ -64,9 +65,9 @@ class _RegistrationPageState extends State<Registration> {
     this.pickeddate = DateTime.now();
     this._namecontroller = new TextEditingController();
     this._skillscontroller = new TextEditingController();
-    this._moredetailscontroller = new TextEditingController();
+    this._biocontroller = new TextEditingController();
     this._jobpostscontroller = new TextEditingController();
-    this._submissionlinkcontroller = new TextEditingController();
+    this._slotpreferencescontroller = new TextEditingController();
   }
 
   void addDetailsToSP(String name, List<String> jobPosts, String description,
@@ -83,7 +84,7 @@ class _RegistrationPageState extends State<Registration> {
 
   onPressRegister() {
     if (!_formKey.currentState.validate()) {
-      
+      showtoast("Fill in the required fields !",Colors.red);
     } else {
       setState(() {
         this.isLoading = true;
@@ -97,12 +98,27 @@ class _RegistrationPageState extends State<Registration> {
       addDetailsToSP(
         _namecontroller?.text ?? "none",
         _jobpostscontroller?.text.split('\n').toList() ?? "none",
-        _skillscontroller?.text.split('\n').toList() ?? "none",
+        _skillscontroller?.text ?? "none",
         dayandtime ?? DateTime.now(),
-        _submissionlinkcontroller?.text ?? "none",
-        _moredetailscontroller?.text ?? "none",
+       _slotpreferencescontroller?.text ?? "none",
+        _biocontroller?.text ?? "none",
       );
+      Navigator.pop(context);
+      showtoast("SAVED ! Tap on APPLY to proceed !",Colors.red);
     }
+  }
+
+  void _changeLanguage(Language language) {
+    Locale _temp;
+    switch (language.languageCode) {
+      case 'en':
+        _temp = Locale(language.languageCode, 'US');
+        break;
+      case 'hi':
+        _temp = Locale(language.languageCode, 'IN');
+        break;
+    }
+    MyApp.setLocale(context, _temp);
   }
 
   Widget _entryField(String title,
@@ -153,7 +169,7 @@ class _RegistrationPageState extends State<Registration> {
   }
 
   Widget _descriptionField(String title,
-      {TextEditingController controllervar}) {
+      {TextEditingController controllervar,int maxlines=8}) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
       child: Column(
@@ -174,7 +190,7 @@ class _RegistrationPageState extends State<Registration> {
                 return null;
               },
               keyboardType: TextInputType.multiline,
-              maxLines: 18,
+              maxLines: maxlines,
               controller: controllervar,
               decoration: InputDecoration(
                   border: InputBorder.none,
@@ -190,9 +206,7 @@ class _RegistrationPageState extends State<Registration> {
       key: _formKey,
       child: ListView(
         children: <Widget>[
-          _entryField("Title", controllervar: _namecontroller),
-          _entryField("Looking to be a?",
-              controllervar: _jobpostscontroller, isRequired: false),
+          _entryField("Name", controllervar: _namecontroller),
           _deadlineSelector(),
           ListTile(
             title: Text(
@@ -200,11 +214,13 @@ class _RegistrationPageState extends State<Registration> {
             trailing: Icon(Icons.calendar_today),
             onTap: callDatePicker,
           ),
-          _descriptionField("Description", controllervar: _skillscontroller),
-          _entryField("Attachments URL",
-              controllervar: _moredetailscontroller, isRequired: false),
-          _entryField("Submission Link",
-              controllervar: _submissionlinkcontroller, isRequired: false),
+          _entryField("Looking to be a?",
+              controllervar: _jobpostscontroller, isRequired: true),
+          _descriptionField("Bio", controllervar: _biocontroller,),
+          _descriptionField("Skills", controllervar: _skillscontroller,maxlines: 5),
+         
+          _entryField("Working Hour PReferences",
+              controllervar:_slotpreferencescontroller, isRequired: false),
         ],
         physics: BouncingScrollPhysics(),
       ),
@@ -219,7 +235,7 @@ class _RegistrationPageState extends State<Registration> {
     );
   }
 
-  showtoast(String text) => _scaffoldKey.currentState.showSnackBar(
+  showtoast(String text,Color color) => _scaffoldKey.currentState.showSnackBar(
         SnackBar(
           content: Text(text),
           elevation: 5,
@@ -228,7 +244,7 @@ class _RegistrationPageState extends State<Registration> {
               Radius.circular(30),
             ),
           ),
-          backgroundColor: Colors.red,
+          backgroundColor:color,
           behavior: SnackBarBehavior.floating,
         ),
       );
@@ -246,6 +262,7 @@ class _RegistrationPageState extends State<Registration> {
     var wspacing = SizedBox(height: size.height * 0.02);
     return SafeArea(
       child: Scaffold(
+        key: _scaffoldKey,
         backgroundColor: Colors.white,
         body: Stack(children: [
           Container(
@@ -297,16 +314,29 @@ class _RegistrationPageState extends State<Registration> {
                     ),
                   ),
                 ]),
-          )
+          ),
+          Align(
+            alignment: Alignment(0.9, -0.9),
+            child: DropdownButton(
+              underline: SizedBox(),
+              icon: Icon(Icons.language),
+              iconSize: mediumfont,
+              items: Language.languageList()
+                  .map<DropdownMenuItem>((lang) => DropdownMenuItem(
+                        child: Text(lang.name),
+                        value: lang,
+                      ))
+                  .toList(),
+              onChanged: (language) {
+                _changeLanguage(language);
+              },
+            ),
+          ),
         ]),
         floatingActionButton: FloatingActionButton.extended(
           onPressed: () {
             onPressRegister();
-            Navigator.pushReplacement(
-                                                context,
-                                                new MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        MyHomePage()));
+            
           },
           icon: Icon(Icons.navigate_next),
           label: Text("Submit"),

@@ -1,5 +1,6 @@
 import 'package:codefury2020/main.dart';
 import 'package:codefury2020/screens/myloginpage.dart';
+import 'package:codefury2020/screens/registration.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -11,7 +12,7 @@ class AuthService {
   handleAuth() {
     return StreamBuilder(
         stream: FirebaseAuth.instance.authStateChanges(),
-        builder: ( context, snapshot) {
+        builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting)
             return Scaffold(
               body: Center(
@@ -19,12 +20,15 @@ class AuthService {
               ),
             );
           if (snapshot.hasData) {
-            if (snapshot.data != null) return MyHomePage();
+            if (snapshot.data != null )
+              return MyHomePage();
+     
           } else {
             return MyLoginPage();
           }
         });
   }
+
 
   //Sign out
   signOut() {
@@ -38,13 +42,13 @@ class AuthService {
   }
 
   //SignIn
-  signIn(AuthCredential authCreds) {
-    FirebaseAuth.instance.signInWithCredential(authCreds);
+  signIn(AuthCredential authCreds, phNo) async {
+    await FirebaseAuth.instance.signInWithCredential(authCreds);
   }
 
-  signInWithOTP(smsCode, verId) {
+  signInWithOTP(smsCode, verId, phNo) {
     AuthCredential authCreds =
         PhoneAuthProvider.credential(verificationId: verId, smsCode: smsCode);
-    signIn(authCreds);
+    signIn(authCreds, phNo);
   }
 }
